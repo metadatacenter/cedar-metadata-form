@@ -1,0 +1,4 @@
+<figure class="static-image" *ngIf="node.subtype == 'image'" [ngStyle]="{'max-width.px': getImageWidth(node)}">
+  <img class="image" src="{{node.staticValue}}" width="{{getImageWidth(node)}}" alt="{{node.name}}"/>
+  <figcaption class="caption"><label>{{node.name}}</label></figcaption>
+</figure>
