@@ -1,0 +1,8 @@
+<mat-form-field class="mat-form-field" [formGroup]="formGroup">
+  <mat-select [multiple]="node.multipleChoice" [formControlName]="node.key + 'list'" [required]="node.required">
+    <mat-option *ngFor="let opt of node.options; index as i" [value]="i">{{opt['label']}}</mat-option>
+  </mat-select>
+  <mat-hint>{{node.hint}}</mat-hint>
+</mat-form-field>
+
+
