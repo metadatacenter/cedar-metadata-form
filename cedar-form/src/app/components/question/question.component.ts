@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 import {InputTypeService} from '../../services/input-type.service';
@@ -7,29 +7,18 @@ import {TreeNode} from '../../models/tree-node.model';
 import {TemplateParserService} from '../../services/template-parser.service';
 import {InstanceService} from '../../services/instance.service';
 import {ValidatorService} from '../../services/validator.service';
-import {
-  faSquare,
-  faAsterisk,
-  faCalendar,
-  faCheckSquare,
-  faDotCircle,
-  faEnvelope,
-  faExternalLinkAlt,
-  faFont,
-  faHashtag,
-  faLink,
-  faList,
-  faParagraph,
-  faPhoneSquare,
-  faPlusSquare
-} from '@fortawesome/free-solid-svg-icons';
+import {faAsterisk} from '@fortawesome/free-solid-svg-icons';
+import {MatTooltip} from '@angular/material';
+import {TooltipPosition} from '@angular/material/tooltip';
+
 
 
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.less'],
-  providers: []
+  providers: [],
+  encapsulation: ViewEncapsulation.None
 })
 export class QuestionComponent implements OnInit, OnChanges {
   @Input() node: TreeNode;
@@ -38,27 +27,16 @@ export class QuestionComponent implements OnInit, OnChanges {
   @Input() disabled: boolean;
   @Output() changed = new EventEmitter<any>();
   @Output() autocomplete = new EventEmitter<any>();
-
+  @ViewChild(MatTooltip, {static: true}) public tooltipComponent: MatTooltip;
 
   faAsterisk = faAsterisk;
-  faEnvelope = faEnvelope;
-  faCalendar = faCalendar;
-  faFont = faFont;
-  faHashtag = faHashtag;
-  faLink = faLink;
-  faParagraph = faParagraph;
-  faCheckSquare = faCheckSquare;
-  faList = faList;
-  faPhoneSquare = faPhoneSquare;
-  faDotCircle = faDotCircle;
-  faExternalLinkAlt = faExternalLinkAlt;
-  faPlusSquare = faPlusSquare;
-  faSquare = faSquare;
-
   database: TemplateParserService;
   formGroup: FormGroup;
   _yt;
   player;
+
+  positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+  position = new FormControl(this.positionOptions[0]);
 
   constructor(private fb: FormBuilder, db: TemplateParserService) {
     this.database = db;
@@ -79,6 +57,14 @@ export class QuestionComponent implements OnInit, OnChanges {
       'location': event.valueLocation,
       'value': event.value
     });
+  }
+
+  public ngAfterViewInit () {
+    // if (this.tooltipComponent) {
+    //   this.tooltipComponent..overlayDir.attach.subscribe((event) => {
+    //     this.tooltipComponent.overlayDir.overlayRef.updatePosition();
+    //   });
+    // }
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {

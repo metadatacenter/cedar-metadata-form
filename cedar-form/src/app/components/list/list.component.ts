@@ -1,31 +1,45 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {TreeNode} from '../../models/tree-node.model';
+import {Overlay} from '@angular/cdk/overlay';
+import {MatSelect} from '@angular/material';
+
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.less']
+  styleUrls: ['./list.component.less'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatSelect, {static: true}) public selectComponent: MatSelect;
   @Input() formGroup: FormGroup;
   @Input() node: TreeNode;
   @Output() changed = new EventEmitter<any>();
 
+  constructor(private elementRef: ElementRef, private overlay: Overlay) {
+  }
 
-  constructor() { }
+  public ngAfterViewInit () {
+    if (this.selectComponent) {
+      this.selectComponent.overlayDir.attach.subscribe((event) => {
+        this.selectComponent.overlayDir.overlayRef.updatePosition();
+      });
+    }
+  }
 
   ngOnInit() {
-    // initialize the value
-    // tslint:disable-next-line:max-line-length
-    this.formGroup.get(this.node.key + 'list').setValue(this.getListValue(this.node.options, this.node.model[this.node.key], this.node.valueLocation, this.node.multipleChoice));
+    this.formGroup.get(this.node.key + 'list').setValue(
+      this.getListValue(this.node.options,
+        this.node.model[this.node.key],
+        this.node.valueLocation,
+        this.node.multipleChoice));
 
     // watch for changes
     this.formGroup.get(this.node.key + 'list').valueChanges.subscribe(value => {
-      // tslint:disable-next-line:max-line-length
-      this.node.model[this.node.key] = this.setListValue(value, this.node.options, this.node.model[this.node.key], this.node.valueLocation, this.node.multipleChoice);
-
-      console.log('list valueChanges', value);
+      this.node.model[this.node.key] = this.setListValue(value,
+        this.node.options, this.node.model[this.node.key],
+        this.node.valueLocation, this.node.multipleChoice);
 
       // fire off change message to parent
       this.changed.emit({

@@ -1,0 +1,9 @@
+<!-- textarea -->
+<mat-form-field  class="example-full-width mat-form-field">
+  <textarea matInput [formControl]="control" type="text"
+    [required]="node.required"></textarea>
+  <mat-hint>{{node.hint}}</mat-hint>
+  <mat-error *ngIf="control['hasError']('required')">
+    Value is <strong>required</strong>
+  </mat-error>
+</mat-form-field>

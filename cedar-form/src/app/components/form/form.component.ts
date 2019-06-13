@@ -5,7 +5,7 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChange
+  SimpleChange, ViewEncapsulation
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {MatTreeNestedDataSource, PageEvent} from '@angular/material';
@@ -26,7 +26,8 @@ import {InstanceService} from '../../services/instance.service';
   selector: 'app-metadata-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.less'],
-  providers: [TemplateParserService]
+  providers: [TemplateParserService],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class FormComponent implements OnChanges {
@@ -77,9 +78,9 @@ export class FormComponent implements OnChanges {
 
   // keep up-to-date on changes in the form
   onChanges(): void {
-    console.log('Form onChanges');
     if (this.form) {
-      this.formChanges = this.form.valueChanges.subscribe(val => {
+      console.log('Form onChanges', this.form.valueChanges);
+      this.form.valueChanges.subscribe(val => {
         this.ref.detectChanges();
       });
     }
@@ -141,6 +142,7 @@ export class FormComponent implements OnChanges {
       this.database.initialize(this.form, this.instance, this.template, this.pageEvent.pageIndex);
 
 
+      console.log('this.database.dataChange', this.database.dataChange);
       this.database.dataChange.subscribe(data => {
         if (data && data.length > 0) {
           this.dataSource = new MatTreeNestedDataSource();

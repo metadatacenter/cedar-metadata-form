@@ -79,11 +79,11 @@ export class AppModule {
 
     const {injector} = this;
 
-    // create custom elements from angular components
-    const ngCustomElement = createCustomElement(CustomelementComponent, {injector});
-
-    // define in browser registry
-    customElements.define('custom-element', ngCustomElement);
+    // // create custom elements from angular components
+    // const ngCustomElement = createCustomElement(CustomelementComponent, {injector});
+    //
+    // // define in browser registry
+    // customElements.define('custom-element', ngCustomElement);
 
     const ngCedarForm = createCustomElement(FormComponent, {injector});
 

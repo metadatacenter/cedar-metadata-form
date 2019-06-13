@@ -21,8 +21,8 @@ export class ControlledComponent implements OnInit, OnChanges {
   @Input() group: FormGroup;
   @Input() autocompleteResults;
   @Input() valueConstraints: any;
-  @ViewChild('autocompleteInput') autocompleteInput: ElementRef;
-  @ViewChild('chipList') chipList: ElementRef;
+  @ViewChild('autocompleteInput', { static: true }) autocompleteInput: ElementRef;
+  @ViewChild('chipList', { static: true }) chipList: ElementRef;
   @Output() onSelectedOption = new EventEmitter();
   @Output() onRemovedOption = new EventEmitter();
   @Output() autocomplete = new EventEmitter<any>();
