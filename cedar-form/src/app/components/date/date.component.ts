@@ -1,13 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {TreeNode} from '../../models/tree-node.model';
+import {MatDatepicker} from '@angular/material';
 
 @Component({
   selector: 'app-date',
   templateUrl: './date.component.html',
   styleUrls: ['./date.component.less']
 })
-export class DateComponent implements OnInit {
+export class DateComponent implements OnInit, AfterViewInit {
+  @ViewChild('picker', {static: true}) picker: MatDatepicker<Date>;
+  @ViewChild('toggle', {static: true}) toggle;
   @Input() formGroup: FormGroup;
   @Input() control: FormControl;
   @Input() node: TreeNode;
@@ -16,6 +19,9 @@ export class DateComponent implements OnInit {
 
 
   constructor() {
+  }
+
+  ngAfterViewInit(): void {
   }
 
   ngOnInit() {

@@ -1,12 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChange, ViewEncapsulation
-} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChange, ViewEncapsulation} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {MatTreeNestedDataSource, PageEvent} from '@angular/material';
 import {NestedTreeControl} from '@angular/cdk/tree';
@@ -19,7 +11,6 @@ import {TemplateService} from '../../services/template.service';
 import {TreeNode} from '../../models/tree-node.model';
 import {InputTypeService} from '../../services/input-type.service';
 import {InstanceService} from '../../services/instance.service';
-
 
 
 @Component({
@@ -51,16 +42,17 @@ export class FormComponent implements OnChanges {
   remove = 'Remove';
   private formChanges: Subscription;
 
-  constructor( database: TemplateParserService, private ref: ChangeDetectorRef) {
+  constructor(database: TemplateParserService, private ref: ChangeDetectorRef) {
     this.pageEvent = {'previousPageIndex': 0, 'pageIndex': 0, 'pageSize': 1, 'length': 0};
     this.database = database;
     this.dataSource = new MatTreeNestedDataSource();
     this.treeControl = new NestedTreeControl<TreeNode>(this._getChildren);
 
+    // living without zone.js
     this.ref.detach();
     setInterval(() => {
       this.ref.detectChanges();
-    }, 1000);
+    }, 100);
   }
 
   changeLog: string[] = [];
@@ -75,7 +67,6 @@ export class FormComponent implements OnChanges {
   }
 
 
-
   // keep up-to-date on changes in the form
   onChanges(): void {
     if (this.form) {
@@ -87,7 +78,7 @@ export class FormComponent implements OnChanges {
 
     if (this.autocompleteResults) {
       this.autocompleteResults.valueChanges.subscribe(value => {
-          console.log('autocompleteResults valueChanges', value);
+        console.log('autocompleteResults valueChanges', value);
         this.ref.detectChanges();
       });
     }
@@ -102,29 +93,11 @@ export class FormComponent implements OnChanges {
 
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    console.log('ngOnChanges', changes);
-
-
-    // if (changes['autocompleteResults']) {
-    //   this.autocompleteResults = changes['autocompleteResults']['currentValue'];
-    // } else {
-
-
-      // const log: string[] = [];
-      //
-      // for (const propName in changes) {
-      //   const changedProp = changes[propName];
-      //   const to = JSON.stringify(changedProp.currentValue);
-      //   if (changedProp.isFirstChange()) {
-      //     log.push(`Initial value of ${propName} set to ${to}`);
-      //   } else {
-      //     const from = JSON.stringify(changedProp.previousValue);
-      //     log.push(`${propName} changed from ${from} to ${to}`);
-      //   }
-      // }
-      // this.changeLog.push(log.join(', '));
+    if ( changes['autocompleteResults'] &&  changes['autocompleteResults']['currentValue'].length > 0) {
+      this.autocompleteResults = changes['autocompleteResults']['currentValue'];
+    } else {
       this.initialize();
-    // }
+    }
   }
 
   private hasNestedChild = (_: number, nodeData: TreeNode) => !nodeData.type;

@@ -1,4 +1,15 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
 import {debounceTime} from 'rxjs/operators';
@@ -10,7 +21,7 @@ import {Post} from '../../models/post.model';
   templateUrl: './controlled.component.html',
   styleUrls: ['./controlled.component.less']
 })
-export class ControlledComponent implements OnInit, OnChanges {
+export class ControlledComponent implements OnInit, OnChanges, AfterViewInit {
 
   allPosts: Post[];
   selectable = true;
@@ -29,6 +40,14 @@ export class ControlledComponent implements OnInit, OnChanges {
 
 
   constructor(private fb: FormBuilder) {
+  }
+
+  mark(source: string) {
+    console.log('markForCheck', source);
+    // this.cd.markForCheck();
+  }
+
+  ngAfterViewInit() {
   }
 
   filterItems(arr, query) {

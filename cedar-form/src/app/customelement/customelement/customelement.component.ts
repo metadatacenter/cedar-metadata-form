@@ -15,7 +15,7 @@ class Stats {
   selector: 'app-custom-element',
   templateUrl: './customelement.component.html',
   styleUrls: ['./customelement.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomelementComponent implements OnInit {
 

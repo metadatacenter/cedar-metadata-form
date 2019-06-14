@@ -1,4 +1,15 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {TreeNode} from '../../models/tree-node.model';
 import {Overlay} from '@angular/cdk/overlay';
@@ -17,7 +28,11 @@ export class ListComponent implements OnInit, AfterViewInit {
   @Input() node: TreeNode;
   @Output() changed = new EventEmitter<any>();
 
-  constructor(private elementRef: ElementRef, private overlay: Overlay) {
+  constructor(private elementRef: ElementRef, private overlay: Overlay, private cd: ChangeDetectorRef) {
+  }
+
+  change() {
+    this.cd.markForCheck();
   }
 
   public ngAfterViewInit () {

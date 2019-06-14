@@ -29,6 +29,7 @@ import {YoutubeComponent} from './components/youtube/youtube.component';
 import {SectionComponent} from './components/section/section.component';
 import {ImageComponent} from './components/image/image.component';
 import {RichtextComponent} from './components/richtext/richtext.component';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 
 @NgModule({
@@ -60,7 +61,9 @@ import {RichtextComponent} from './components/richtext/richtext.component';
     DemoMaterialModule,
     BrowserAnimationsModule,
     NgxYoutubePlayerModule.forRoot(),
-    FontAwesomeModule
+    FontAwesomeModule,
+    OverlayModule,
+
   ],
   providers: [],
   bootstrap: [],

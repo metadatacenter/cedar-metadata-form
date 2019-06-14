@@ -21,6 +21,7 @@ import {ImageComponent} from './components/image/image.component';
 import {RichtextComponent} from './components/richtext/richtext.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {DemoMaterialModule} from '../../shared/material-module';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 
 
@@ -35,7 +36,8 @@ import {DemoMaterialModule} from '../../shared/material-module';
     CommonModule,
     DemoMaterialModule,
     NgxYoutubePlayerModule.forRoot(),
-    FontAwesomeModule
+    FontAwesomeModule,
+    OverlayModule
   ],
   exports: [
     FormComponent

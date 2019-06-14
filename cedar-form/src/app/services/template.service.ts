@@ -182,36 +182,36 @@ export class TemplateService {
     return result;
   }
 
-  static initValue(schema: TemplateSchema, key:string, type:InputType, minItems:number, maxItems:number) {
+  static initValue(schema: TemplateSchema, key: string, type: InputType, minItems: number, maxItems: number) {
     let result;
-    if (type == InputType.element) {
-      console.log('initValue element',key, minItems);
+    if (type === InputType.element) {
+      console.log('initValue element', key, minItems);
       if (!this.isUndefined(minItems)) {
-        result = [{'@context':{},'@id':schema['@id']}];
+        result = [{'@context': {}, '@id': schema['@id']}];
       } else {
-        result = {'@context':{},'@id':schema['@id']};
+        result = {'@context': {}, '@id': schema['@id']};
       }
     } else {
-      let location = this.getValueLocation(schema, this.getNodeType(type), this.getNodeSubtype(type));
+      const location = this.getValueLocation(schema, this.getNodeType(type), this.getNodeSubtype(type));
 
-      if (location == '@value') {
+      if (location === '@value') {
         if (!this.isUndefined(minItems)) {
           result = [];
-          for (let i=0; i<minItems; i++) {
-            let item = {'@value': null};
-            if (type == InputType.date) {
+          for (let i = 0; i < minItems; i++) {
+            const item = {'@value': null};
+            if (type === InputType.date) {
               item['@type'] = 'xsd:date';
             }
-            result.push(item)
+            result.push(item);
           }
         } else {
           result = {'@value': null};
-          if (type == InputType.date) {
+          if (type === InputType.date) {
             result['@type'] = 'xsd:date';
           }
         }
       } else {
-        if (type == InputType.controlled) {
+        if (type === InputType.controlled) {
           if (!this.isUndefined(minItems)) {
             result = [];
           } else {
@@ -219,9 +219,9 @@ export class TemplateService {
           }
         } else if (!this.isUndefined(minItems)) {
           result = [];
-          for (let i=0; i<minItems; i++) {
-            let item = {};
-            result.push(item)
+          for (let i = 0; i < minItems; i++) {
+            const item = {};
+            result.push(item);
           }
         } else {
           result = {};
@@ -272,31 +272,52 @@ export class TemplateService {
   }
 
   static getOrder(schema: TemplateSchema) {
-    return schema['_ui']['order'];
+    if (this.isField(schema)) {
+      return [schema['schema:name']];
+    } else {
+      return schema['_ui']['order'];
+    }
   }
 
   static getProperties(schema: TemplateSchema) {
-    return schema['properties'];
+    if (this.isField(schema)) {
+      const prop = {};
+      prop[schema['schema:name']] = schema;
+      return prop;
+      return schema;
+    } else {
+      return schema['properties'];
+    }
   }
 
   static getLabels(schema: TemplateSchema) {
-    return schema['_ui']['propertyLabels'];
+    if (this.isField(schema)) {
+      return [schema['schema:name']];
+    } else {
+      return schema['_ui']['propertyLabels'];
+    }
   }
 
   static getDescriptions(schema: TemplateSchema) {
-    return schema['_ui']['propertyDescriptions'];
+    if (this.isField(schema)) {
+      return [schema['schema:description']];
+    } else {
+      return schema['_ui']['propertyDescriptions'];
+    }
   }
 
   static getPageCount(schema: TemplateSchema) {
     const properties = this.getProperties(schema);
     let currentPage = 0;
-    this.getOrder(schema).forEach(function (key) {
-      let prop: TemplateSchema = properties[key];
-      let type: InputType = TemplateService.getInputType(prop);
-      if (InputTypeService.isPageBreak(type)) {
-        currentPage++;
-      }
-    });
+    if (this.getOrder(schema)) {
+      this.getOrder(schema).forEach(function (key) {
+        const prop: TemplateSchema = properties[key];
+        const type: InputType = TemplateService.getInputType(prop);
+        if (InputTypeService.isPageBreak(type)) {
+          currentPage++;
+        }
+      });
+    }
     return currentPage + 1;
   }
 
@@ -306,24 +327,27 @@ export class TemplateService {
     const properties = this.getProperties(schema);
     const order = this.getOrder(schema);
     let currentPage = 0;
-    let pageOrder = [];
-    let that = this;
-    order.forEach(function (key) {
+    const pageOrder = [];
+    const that = this;
+    if (order) {
+      order.forEach(function (key) {
 
-      let prop: TemplateSchema = properties[key];
+        const prop: TemplateSchema = properties[key];
 
-      let type: InputType = that.getInputType(prop);
-      if (InputTypeService.isPageBreak(type)) {
-        currentPage++;
-      } else {
-        if (currentPage === p) {
-          pageOrder.push(key);
+        const type: InputType = that.getInputType(prop);
+        if (InputTypeService.isPageBreak(type)) {
+          currentPage++;
+        } else {
+          if (currentPage === p) {
+            pageOrder.push(key);
+          }
         }
-      }
 
-    });
+      });
+    }
     return pageOrder;
   }
+
 
   static getInputType(schema: TemplateSchema): InputType {
     let result = InputType.textfield;
@@ -362,9 +386,9 @@ export class TemplateService {
   static generateGUID = function () {
     let d = Date.now();
     const guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = (d + Math.random() * 16) % 16 | 0;
+      const r = (d + Math.random() * 16) % 16 | 0;
       d = Math.floor(d / 16);
-      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
     return guid;
   };

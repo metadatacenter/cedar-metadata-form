@@ -1,4 +1,16 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChange,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 import {InputTypeService} from '../../services/input-type.service';
@@ -12,7 +24,6 @@ import {MatTooltip} from '@angular/material';
 import {TooltipPosition} from '@angular/material/tooltip';
 
 
-
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
@@ -20,14 +31,15 @@ import {TooltipPosition} from '@angular/material/tooltip';
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
-export class QuestionComponent implements OnInit, OnChanges {
+export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
+  @ViewChild('tooltip', {static: true}) tooltip: MatTooltip;
   @Input() node: TreeNode;
   @Input() parentGroup: FormGroup;
   @Input() autocompleteResults: any;
   @Input() disabled: boolean;
   @Output() changed = new EventEmitter<any>();
   @Output() autocomplete = new EventEmitter<any>();
-  @ViewChild(MatTooltip, {static: true}) public tooltipComponent: MatTooltip;
+
 
   faAsterisk = faAsterisk;
   database: TemplateParserService;
@@ -35,19 +47,16 @@ export class QuestionComponent implements OnInit, OnChanges {
   _yt;
   player;
 
-  positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
-  position = new FormControl(this.positionOptions[0]);
-
-  constructor(private fb: FormBuilder, db: TemplateParserService) {
+  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, db: TemplateParserService) {
     this.database = db;
   }
+
 
   onAutocomplete(event) {
     this.autocomplete.emit(event);
   }
 
   onChange(event) {
-    console.log('question onChange', event);
     this.changed.emit({
       'type': event.type,
       'subtype': event.subtype,
@@ -59,12 +68,16 @@ export class QuestionComponent implements OnInit, OnChanges {
     });
   }
 
-  public ngAfterViewInit () {
-    // if (this.tooltipComponent) {
-    //   this.tooltipComponent..overlayDir.attach.subscribe((event) => {
-    //     this.tooltipComponent.overlayDir.overlayRef.updatePosition();
-    //   });
+
+  ngAfterViewInit() {
+    // console.log('tooltip', this.tooltip);
+    // if (this.tooltip) {
+    //
+    //   this.tooltip._overlayRef.updatePosition();
+    //   // this.cd.detectChanges();
+    //   // setTimeout(() => this.tooltip.hide(2000));
     // }
+
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -153,6 +166,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   // controlled term was selected
   onSelectedControlled(event) {
+    console.log('onSelectedControlled', event);
     InstanceService.addControlledValue(this.node.model, this.node.key, event['@id'], event['prefLabel']);
   }
 

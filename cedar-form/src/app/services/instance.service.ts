@@ -79,7 +79,7 @@ export class InstanceService {
 
   static setListValue(model, key, index, valueLocation, val) {
     if (Array.isArray(model[key])) {
-      let arr = [];
+      const arr = [];
       for (let i = 0; i < val.length; i++) {
         arr.push({'@value': val[i]});
       }
@@ -100,32 +100,32 @@ export class InstanceService {
   static generateGUID = function () {
     let d = Date.now();
     const guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = (d + Math.random() * 16) % 16 | 0;
+      const r = (d + Math.random() * 16) % 16 | 0;
       d = Math.floor(d / 16);
-      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
     return guid;
   };
 
   // build the form value for the attribute value field
   static buildAttributeValue(model, key): any[] {
-    let val = [];
+    const val = [];
     if (model[key] && Array.isArray(model[key])) {
       for (let i = 0; i < model[key].length; i++) {
         const itemKey = model[key][i];
         const itemValue = model[itemKey]['@value'];
-        val.push({'@value': itemValue, 'rdfs:label': itemKey})
+        val.push({'@value': itemValue, 'rdfs:label': itemKey});
       }
     }
-    if (val.length == 0) {
-      val.push({'@value': null, 'rdfs:label': null})
+    if (val.length === 0) {
+      val.push({'@value': null, 'rdfs:label': null});
     }
     return val;
   }
 
   // set the form values for the attribute value field into the model
   static setAttributeValue(model, key, index, location, val) {
-    let itemKey = model[key][index];
+    const itemKey = model[key][index];
     if (itemKey) {
 
       if (location === 'value') {
@@ -140,7 +140,7 @@ export class InstanceService {
         model['@context'][val] = model['@context'][itemKey];
         delete model['@context'][itemKey];
         model[key][index] = val;
-        model[val] = {'@value': itemValue}
+        model[val] = {'@value': itemValue};
       }
     } else {
       // initialize attribute value field with this itemKey
@@ -148,7 +148,7 @@ export class InstanceService {
       while (model.hasOwnProperty(newKey)) {
         newKey = newKey + '1';
       }
-      model['@context'][newKey] = "https://schema.metadatacenter.org/properties/" + this.generateGUID();
+      model['@context'][newKey] = 'https://schema.metadatacenter.org/properties/' + this.generateGUID();
       model[key] = [newKey];
       model[newKey] = {'@value': val};
     }
@@ -163,18 +163,18 @@ export class InstanceService {
     while (model.hasOwnProperty(newKey)) {
       newKey = newKey + '1';
     }
-    model['@context'][newKey] = "https://schema.metadatacenter.org/properties/" + this.generateGUID();
+    model['@context'][newKey] = 'https://schema.metadatacenter.org/properties/' + this.generateGUID();
     model[key].splice(index + 1, 0, newKey);
     model[newKey] = {'@value': oldValue};
-  };
+  }
 
   // remove the attribute value field pair at index
   static removeAttributeValue(model, key, index) {
     const oldKey = model[key][index];
     delete model['@context'][oldKey];
     model[key].splice(index, 1);
-    delete model[oldKey]
-  };
+    delete model[oldKey];
+  }
 
   static getRadioValue(model, key, index, valueLocation) {
     if (Array.isArray(model[key])) {
@@ -185,7 +185,7 @@ export class InstanceService {
   }
 
   static addControlledValue(model: any, key: string, value: string, label: string) {
-    let val = {'@id': value, 'rdfs:label': label};
+    const val = {'@id': value, 'rdfs:label': label};
     model[key] = Array.isArray(model[key]) ? model[key] : [model[key]];
     model[key].push(val);
   }
@@ -196,9 +196,9 @@ export class InstanceService {
 
 
   static setCheckValue(model: any, key: string, index: number, location: string, val: string[]) {
-    let arr = [];
+    const arr = [];
     for (let i = 0; i < val[index].length; i++) {
-      let obj = {};
+      const obj = {};
       obj[location] = val[index][i];
       arr.push(obj);
     }
@@ -207,49 +207,49 @@ export class InstanceService {
 
   static initInstance() {
     return {
-      "@context": {
-        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "pav": "http://purl.org/pav/",
-        "schema": "http://schema.org/",
-        "oslc": "http://open-services.net/ns/core#",
-        "skos": "http://www.w3.org/2004/02/skos/core#",
-        "rdfs:label": {
-          "@type": "xsd:string"
+      '@context': {
+        'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
+        'xsd': 'http://www.w3.org/2001/XMLSchema#',
+        'pav': 'http://purl.org/pav/',
+        'schema': 'http://schema.org/',
+        'oslc': 'http://open-services.net/ns/core#',
+        'skos': 'http://www.w3.org/2004/02/skos/core#',
+        'rdfs:label': {
+          '@type': 'xsd:string'
         },
-        "schema:isBasedOn": {
-          "@type": "@id"
+        'schema:isBasedOn': {
+          '@type': '@id'
         },
-        "schema:name": {
-          "@type": "xsd:string"
+        'schema:name': {
+          '@type': 'xsd:string'
         },
-        "schema:description": {
-          "@type": "xsd:string"
+        'schema:description': {
+          '@type': 'xsd:string'
         },
-        "pav:createdOn": {
-          "@type": "xsd:dateTime"
+        'pav:createdOn': {
+          '@type': 'xsd:dateTime'
         },
-        "pav:createdBy": {
-          "@type": "@id"
+        'pav:createdBy': {
+          '@type': '@id'
         },
-        "pav:lastUpdatedOn": {
-          "@type": "xsd:dateTime"
+        'pav:lastUpdatedOn': {
+          '@type': 'xsd:dateTime'
         },
-        "oslc:modifiedBy": {
-          "@type": "@id"
+        'oslc:modifiedBy': {
+          '@type': '@id'
         },
-        "skos:notation": {
-          "@type": "xsd:string"
+        'skos:notation': {
+          '@type': 'xsd:string'
         }
       },
-      "schema:isBasedOn": "",
-      "schema:name": "",
-      "schema:description": "",
-      "pav:createdOn": "",
-      "pav:createdBy": "",
-      "pav:lastUpdatedOn": "",
-      "oslc:modifiedBy": "",
-      "@id": ""
+      'schema:isBasedOn': '',
+      'schema:name': '',
+      'schema:description': '',
+      'pav:createdOn': '',
+      'pav:createdBy': '',
+      'pav:lastUpdatedOn': '',
+      'oslc:modifiedBy': '',
+      '@id': ''
     };
   }
 

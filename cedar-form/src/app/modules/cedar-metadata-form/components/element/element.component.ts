@@ -9,7 +9,7 @@ import {TreeNode} from '../../models/tree-node.model';
   templateUrl: './element.component.html',
   styleUrls: ['./element.component.less'],
   providers: [],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ElementComponent  implements OnInit {
 
