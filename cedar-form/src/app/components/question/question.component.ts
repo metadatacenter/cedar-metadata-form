@@ -1,4 +1,16 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChange,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 import {InputTypeService} from '../../services/input-type.service';
@@ -7,31 +19,20 @@ import {TreeNode} from '../../models/tree-node.model';
 import {TemplateParserService} from '../../services/template-parser.service';
 import {InstanceService} from '../../services/instance.service';
 import {ValidatorService} from '../../services/validator.service';
-import {
-  faSquare,
-  faAsterisk,
-  faCalendar,
-  faCheckSquare,
-  faDotCircle,
-  faEnvelope,
-  faExternalLinkAlt,
-  faFont,
-  faHashtag,
-  faLink,
-  faList,
-  faParagraph,
-  faPhoneSquare,
-  faPlusSquare
-} from '@fortawesome/free-solid-svg-icons';
+import {faAsterisk} from '@fortawesome/free-solid-svg-icons';
+import {MatTooltip} from '@angular/material';
+import {TooltipPosition} from '@angular/material/tooltip';
 
 
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.less'],
-  providers: []
+  providers: [],
+  encapsulation: ViewEncapsulation.None
 })
-export class QuestionComponent implements OnInit, OnChanges {
+export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
+  // @ViewChild('tooltip', {static: true}) tooltip: MatTooltip;
   @Input() node: TreeNode;
   @Input() parentGroup: FormGroup;
   @Input() autocompleteResults: any;
@@ -41,35 +42,21 @@ export class QuestionComponent implements OnInit, OnChanges {
 
 
   faAsterisk = faAsterisk;
-  faEnvelope = faEnvelope;
-  faCalendar = faCalendar;
-  faFont = faFont;
-  faHashtag = faHashtag;
-  faLink = faLink;
-  faParagraph = faParagraph;
-  faCheckSquare = faCheckSquare;
-  faList = faList;
-  faPhoneSquare = faPhoneSquare;
-  faDotCircle = faDotCircle;
-  faExternalLinkAlt = faExternalLinkAlt;
-  faPlusSquare = faPlusSquare;
-  faSquare = faSquare;
-
   database: TemplateParserService;
   formGroup: FormGroup;
   _yt;
   player;
 
-  constructor(private fb: FormBuilder, db: TemplateParserService) {
+  constructor(private fb: FormBuilder,  db: TemplateParserService) {
     this.database = db;
   }
+
 
   onAutocomplete(event) {
     this.autocomplete.emit(event);
   }
 
   onChange(event) {
-    console.log('question onChange', event);
     this.changed.emit({
       'type': event.type,
       'subtype': event.subtype,
@@ -81,8 +68,11 @@ export class QuestionComponent implements OnInit, OnChanges {
     });
   }
 
+
+  ngAfterViewInit() {
+  }
+
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    console.log('ngOnChanges', changes);
     if (changes['autocompleteResults']) {
       this.autocompleteResults = changes['autocompleteResults']['currentValue'];
     }
@@ -250,7 +240,6 @@ export class QuestionComponent implements OnInit, OnChanges {
   }
 
   loadForm(key, form) {
-    console.log('load the form with key', key, form);
   }
 
 

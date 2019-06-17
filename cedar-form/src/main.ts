@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import 'hammerjs';
 
 declare global {
   interface Window {
@@ -22,7 +23,7 @@ if (environment.production) {
 }
 
 
-
+// living without zone.js
 platformBrowserDynamic()
   .bootstrapModule(
     AppModule, { ngZone: 'noop' })

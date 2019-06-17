@@ -32,7 +32,6 @@ export class CheckboxComponent implements OnInit {
       // update our metadata model
       this.node.model[this.node.key] = this.setValue(value, this.node.options, this.node.model[this.node.key], this.node.valueLocation);
 
-      console.log('checkbox valueChanges', value);
 
       // fire off change message to parent
       this.changed.emit({
@@ -52,7 +51,6 @@ export class CheckboxComponent implements OnInit {
   }
 
   setChecked(event, control) {
-    console.log('setChecked',  event.checked);
     control.setValue(event.checked);
   }
 

@@ -143,8 +143,6 @@ export class TemplateParserService {
   fieldNode(schema: TemplateSchema, model: Metadata, propertyLabel: string, inputType: InputType, minItems, maxItems, key: string, modelValue: MetadataSnip, formGroup: FormGroup, parent: TreeNode): TreeNode {
     const nodeType = TemplateService.getNodeType(inputType);
     const nodeSubtype = TemplateService.getNodeSubtype(inputType);
-    console.log('fieldNode',model, key,  modelValue);
-
 
 
     return {
@@ -190,7 +188,6 @@ export class TemplateParserService {
   elementNode(schema: TemplateSchema, model: Metadata, label: string, minItems, maxItems, i, key, level, modelValue, formGroup: FormGroup, parent: TreeNode, page: number): TreeNode {
     const nodeType = TemplateService.getNodeType(InputType.element);
     const nodeSubtype = TemplateService.getNodeSubtype(InputType.element);
-    console.log('elementNode',key, model);
 
     const node = {
       'key': key,
@@ -257,7 +254,6 @@ export class TemplateParserService {
 
 
 
-        console.log('buildTree', key, type, !model.hasOwnProperty(key));
         if (!model.hasOwnProperty(key) ) {
 
           model['@context'][key] = schema['@id'];

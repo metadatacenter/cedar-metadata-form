@@ -6,10 +6,10 @@
       <span>{{chip['value']}}</span>
       <mat-icon matChipRemove>cancel</mat-icon>
     </mat-chip>
-    <input #autocompleteInput type="text"  aria-label="Number" matInput
+    <input  #autocompleteInput type="text"  aria-label="Number" matInput
       [formControl]="group.controls['values']['controls'][0].get('search')"
       [matAutocomplete]="auto" [matChipInputFor]="chipList">
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (changed)="changed($event)"
+    <mat-autocomplete  #auto="matAutocomplete" [displayWith]="displayFn" (changed)="changed($event)"
       (optionSelected)="selected($event, group.controls['values']['controls'][0].get('search').value['@id'], group.controls['values']['controls'][0].get('search').value['prefLabel'])">
       <mat-option *ngIf="isLoading" class="is-loading">
         <mat-spinner diameter="20"></mat-spinner>

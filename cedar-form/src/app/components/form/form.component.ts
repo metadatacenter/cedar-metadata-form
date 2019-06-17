@@ -1,12 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChange
-} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChange, ViewEncapsulation} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {MatTreeNestedDataSource, PageEvent} from '@angular/material';
 import {NestedTreeControl} from '@angular/cdk/tree';
@@ -21,12 +13,12 @@ import {InputTypeService} from '../../services/input-type.service';
 import {InstanceService} from '../../services/instance.service';
 
 
-
 @Component({
   selector: 'app-metadata-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.less'],
-  providers: [TemplateParserService]
+  providers: [TemplateParserService],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class FormComponent implements OnChanges {
@@ -50,16 +42,17 @@ export class FormComponent implements OnChanges {
   remove = 'Remove';
   private formChanges: Subscription;
 
-  constructor( database: TemplateParserService, private ref: ChangeDetectorRef) {
+  constructor(database: TemplateParserService, private ref: ChangeDetectorRef) {
     this.pageEvent = {'previousPageIndex': 0, 'pageIndex': 0, 'pageSize': 1, 'length': 0};
     this.database = database;
     this.dataSource = new MatTreeNestedDataSource();
     this.treeControl = new NestedTreeControl<TreeNode>(this._getChildren);
 
+    // living without zone.js
     this.ref.detach();
     setInterval(() => {
       this.ref.detectChanges();
-    }, 1000);
+    }, 100);
   }
 
   changeLog: string[] = [];
@@ -74,26 +67,22 @@ export class FormComponent implements OnChanges {
   }
 
 
-
   // keep up-to-date on changes in the form
   onChanges(): void {
-    console.log('Form onChanges');
     if (this.form) {
-      this.formChanges = this.form.valueChanges.subscribe(val => {
+      this.form.valueChanges.subscribe(val => {
         this.ref.detectChanges();
       });
     }
 
     if (this.autocompleteResults) {
       this.autocompleteResults.valueChanges.subscribe(value => {
-          console.log('autocompleteResults valueChanges', value);
         this.ref.detectChanges();
       });
     }
 
     if (this.instance) {
       this.instance.valueChanges.subscribe(value => {
-        console.log('instance valueChanges', value);
         this.ref.detectChanges();
       });
     }
@@ -101,29 +90,11 @@ export class FormComponent implements OnChanges {
 
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    console.log('ngOnChanges', changes);
-
-
-    // if (changes['autocompleteResults']) {
-    //   this.autocompleteResults = changes['autocompleteResults']['currentValue'];
-    // } else {
-
-
-      // const log: string[] = [];
-      //
-      // for (const propName in changes) {
-      //   const changedProp = changes[propName];
-      //   const to = JSON.stringify(changedProp.currentValue);
-      //   if (changedProp.isFirstChange()) {
-      //     log.push(`Initial value of ${propName} set to ${to}`);
-      //   } else {
-      //     const from = JSON.stringify(changedProp.previousValue);
-      //     log.push(`${propName} changed from ${from} to ${to}`);
-      //   }
-      // }
-      // this.changeLog.push(log.join(', '));
+    if ( changes['autocompleteResults'] &&  changes['autocompleteResults']['currentValue'].length > 0) {
+      this.autocompleteResults = changes['autocompleteResults']['currentValue'];
+    } else {
       this.initialize();
-    // }
+    }
   }
 
   private hasNestedChild = (_: number, nodeData: TreeNode) => !nodeData.type;
@@ -131,7 +102,6 @@ export class FormComponent implements OnChanges {
   private _getChildren = (node: TreeNode) => node.children;
 
   initialize() {
-    console.log('initialize');
 
     if (this.instance && this.template) {
       this.pageEvent.length = TemplateService.getPageCount(this.template);
@@ -168,7 +138,6 @@ export class FormComponent implements OnChanges {
 
   // add new element to form
   copyItem(node: TreeNode) {
-    console.log('copyItem', Array.isArray(node.model[node.key]));
 
     const clonedModel = cloneDeep(node.model[node.key][node.itemCount]);
     node.model[node.key].splice(node.itemCount + 1, 0, clonedModel);

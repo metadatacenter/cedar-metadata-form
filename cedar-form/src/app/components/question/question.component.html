@@ -30,7 +30,7 @@
 
     <span *ngIf="node.required" class="required"><fa-icon [icon]="faAsterisk"></fa-icon></span>
 
-    <button mat-icon-button class="mat-icon-button help" *ngIf="node.help" [matTooltip]="node.help">
+    <button  mat-icon-button class="mat-icon-button help" *ngIf="node.help"   [appTooltip]="node.help"   >
       <mat-icon>help_outline</mat-icon>
     </button>
 
