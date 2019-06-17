@@ -10,7 +10,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppComponent} from './app.component';
 import {DemoMaterialModule} from './shared/material-module';
 import {PushPipe} from './push.pipe';
-import {CustomelementComponent} from './customelement/customelement/customelement.component';
 import {FormComponent} from './components/form/form.component';
 import {AttributeValueComponent} from './components/attribute-value/attribute-value.component';
 import {QuestionComponent} from './components/question/question.component';
@@ -36,7 +35,6 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
 @NgModule({
   declarations: [
     AppComponent,
-    CustomelementComponent,
     FormComponent,
     PushPipe,
     AttributeValueComponent,
@@ -72,7 +70,6 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
   bootstrap: [],
   entryComponents: [
     AppComponent,
-    CustomelementComponent,
     FormComponent,
     TooltipComponent
   ]
