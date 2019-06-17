@@ -32,7 +32,7 @@ import {TooltipPosition} from '@angular/material/tooltip';
   encapsulation: ViewEncapsulation.None
 })
 export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
-  @ViewChild('tooltip', {static: true}) tooltip: MatTooltip;
+  // @ViewChild('tooltip', {static: true}) tooltip: MatTooltip;
   @Input() node: TreeNode;
   @Input() parentGroup: FormGroup;
   @Input() autocompleteResults: any;
@@ -47,7 +47,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   _yt;
   player;
 
-  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, db: TemplateParserService) {
+  constructor(private fb: FormBuilder,  db: TemplateParserService) {
     this.database = db;
   }
 
@@ -70,18 +70,9 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
 
 
   ngAfterViewInit() {
-    // console.log('tooltip', this.tooltip);
-    // if (this.tooltip) {
-    //
-    //   this.tooltip._overlayRef.updatePosition();
-    //   // this.cd.detectChanges();
-    //   // setTimeout(() => this.tooltip.hide(2000));
-    // }
-
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    console.log('ngOnChanges', changes);
     if (changes['autocompleteResults']) {
       this.autocompleteResults = changes['autocompleteResults']['currentValue'];
     }
@@ -166,7 +157,6 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
 
   // controlled term was selected
   onSelectedControlled(event) {
-    console.log('onSelectedControlled', event);
     InstanceService.addControlledValue(this.node.model, this.node.key, event['@id'], event['prefLabel']);
   }
 
@@ -250,7 +240,6 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   loadForm(key, form) {
-    console.log('load the form with key', key, form);
   }
 
 

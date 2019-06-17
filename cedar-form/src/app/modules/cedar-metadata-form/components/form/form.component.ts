@@ -92,7 +92,6 @@ export class FormComponent implements OnChanges {
   // keep up-to-date on changes in the form
   onChanges(): void {
     if (this.form) {
-      console.log('valueChanges', this.form.valueChanges);
       this.formChanges = this.form.valueChanges.subscribe(val => {
         setTimeout(() => {
           this.response.payload = val;
@@ -142,7 +141,6 @@ export class FormComponent implements OnChanges {
 
       this.database.initialize(this.form, this.instance, this.template, this.pageEvent.pageIndex);
 
-      console.log(' this.database.dataChange', this.database.dataChange)
       this.database.dataChange.subscribe(data => {
         if (data && data.length > 0) {
           this.dataSource = new MatTreeNestedDataSource();
@@ -171,7 +169,6 @@ export class FormComponent implements OnChanges {
 
   // add new element to form
   copyItem(node: TreeNode) {
-    console.log('copyItem', Array.isArray(node.model[node.key]));
 
     const clonedModel = cloneDeep(node.model[node.key][node.itemCount]);
     node.model[node.key].splice(node.itemCount + 1, 0, clonedModel);

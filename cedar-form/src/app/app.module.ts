@@ -7,7 +7,6 @@ import {NgxYoutubePlayerModule} from 'ngx-youtube-player';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-
 import {AppComponent} from './app.component';
 import {DemoMaterialModule} from './shared/material-module';
 import {PushPipe} from './push.pipe';
@@ -30,6 +29,8 @@ import {SectionComponent} from './components/section/section.component';
 import {ImageComponent} from './components/image/image.component';
 import {RichtextComponent} from './components/richtext/richtext.component';
 import {OverlayModule} from '@angular/cdk/overlay';
+import { TooltipDirective } from './components/tooltip/tooltip.directive';
+import { TooltipComponent } from './components/tooltip/tooltip.component';
 
 
 @NgModule({
@@ -51,7 +52,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
     SectionComponent,
     TextareaComponent,
     TextfieldComponent,
-    YoutubeComponent
+    YoutubeComponent,
+    TooltipDirective,
+    TooltipComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import {OverlayModule} from '@angular/cdk/overlay';
   entryComponents: [
     AppComponent,
     CustomelementComponent,
-    FormComponent
+    FormComponent,
+    TooltipComponent
   ]
 })
 export class AppModule {

@@ -43,7 +43,6 @@ export class ControlledComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   mark(source: string) {
-    console.log('markForCheck', source);
     // this.cd.markForCheck();
   }
 

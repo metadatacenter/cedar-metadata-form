@@ -1,6 +1,6 @@
 
 <div class=".cedar-form-body">
-<h2>{{title}} <button mat-icon-button class="help-text-button" *ngIf="description" [matTooltip]="description">
+<h2>{{title}} <button mat-icon-button class="mat-icon-button help" *ngIf="description" [appTooltip]="description">
   <mat-icon>help_outline</mat-icon>
 </button></h2>
 
@@ -38,7 +38,7 @@
           <span><label class="element-label" [attr.for]="node.name">{{node.name}}
             <span style="font-weight:normal" *ngIf="node.multiSelect">({{(node.itemCount + 1)}}  of {{ node.maxItems || 'N'}})</span></label>
 
-          <button mat-icon-button class="help-text-button" *ngIf="node.help" [matTooltip]="node.help">
+          <button mat-icon-button class="help-text-button" *ngIf="node.help" [appTooltip]="node.help">
             <mat-icon>help_outline</mat-icon>
           </button>
           <button mat-icon-button class="node-add" *ngIf="!disabled && node.multiSelect" (click)="copyItem(node)">

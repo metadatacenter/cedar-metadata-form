@@ -70,7 +70,6 @@ export class FormComponent implements OnChanges {
   // keep up-to-date on changes in the form
   onChanges(): void {
     if (this.form) {
-      console.log('Form onChanges', this.form.valueChanges);
       this.form.valueChanges.subscribe(val => {
         this.ref.detectChanges();
       });
@@ -78,14 +77,12 @@ export class FormComponent implements OnChanges {
 
     if (this.autocompleteResults) {
       this.autocompleteResults.valueChanges.subscribe(value => {
-        console.log('autocompleteResults valueChanges', value);
         this.ref.detectChanges();
       });
     }
 
     if (this.instance) {
       this.instance.valueChanges.subscribe(value => {
-        console.log('instance valueChanges', value);
         this.ref.detectChanges();
       });
     }
@@ -105,7 +102,6 @@ export class FormComponent implements OnChanges {
   private _getChildren = (node: TreeNode) => node.children;
 
   initialize() {
-    console.log('initialize');
 
     if (this.instance && this.template) {
       this.pageEvent.length = TemplateService.getPageCount(this.template);
@@ -115,7 +111,6 @@ export class FormComponent implements OnChanges {
       this.database.initialize(this.form, this.instance, this.template, this.pageEvent.pageIndex);
 
 
-      console.log('this.database.dataChange', this.database.dataChange);
       this.database.dataChange.subscribe(data => {
         if (data && data.length > 0) {
           this.dataSource = new MatTreeNestedDataSource();
@@ -143,7 +138,6 @@ export class FormComponent implements OnChanges {
 
   // add new element to form
   copyItem(node: TreeNode) {
-    console.log('copyItem', Array.isArray(node.model[node.key]));
 
     const clonedModel = cloneDeep(node.model[node.key][node.itemCount]);
     node.model[node.key].splice(node.itemCount + 1, 0, clonedModel);

@@ -17,7 +17,6 @@ export class ListComponent implements OnInit {
   constructor() { }
 
   listOpened() {
-    console.log('list opened');
   }
 
   ngOnInit() {

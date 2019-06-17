@@ -235,7 +235,6 @@ export class QuestionComponent implements OnInit {
   }
 
   loadForm(key, form) {
-    console.log('load the form with key', key, form);
   }
 
 

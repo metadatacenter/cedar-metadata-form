@@ -30,7 +30,6 @@ export class DateComponent implements OnInit, AfterViewInit {
 
     // watch for changes
     this.formGroup.get('values').valueChanges.subscribe(value => {
-      console.log('date valueChanges', value);
 
       // update our metadata model
       this.node.model[this.node.key] = this.setValue(value, this.node.model[this.node.key], this.node.valueLocation);

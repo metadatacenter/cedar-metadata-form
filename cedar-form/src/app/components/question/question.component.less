@@ -144,20 +144,27 @@ mat-hint {
 //  color: rgba(0, 0, 0, .54)
 //}
 
-:host ::ng-deep button.mat-icon-button.help {
+button.mat-icon-button.help {
   padding: 0;
   height: 0.8em;
   width: 1.0em;
   line-height: 1em;
-  margin-right: .5em;
+  margin: .5em;
   font-size: 1em;
+  z-index: 100;
+  position: relative;
 
-  mat-icon {
-    font-size: 1em;
-    width: 1em;
-    padding: 0;
-    left: 0;
-    color: rgba(0, 0, 0, 0.54);
+  .mat-button-wrapper {
+    z-index: -100;
+    position: relative;
+
+    .mat-icon {
+      font-size: 1em;
+      width: 1em;
+      padding: 0;
+      left: 0;
+      color: rgba(0, 0, 0, 0.54);
+    }
   }
 }
 
