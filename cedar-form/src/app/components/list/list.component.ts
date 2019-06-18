@@ -1,8 +1,6 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -28,12 +26,12 @@ export class ListComponent implements OnInit, AfterViewInit {
   @Input() node: TreeNode;
   @Output() changed = new EventEmitter<any>();
 
-  constructor(private elementRef: ElementRef, private overlay: Overlay, private cd: ChangeDetectorRef) {
+  constructor( private overlay: Overlay) {
   }
 
-  change() {
-    this.cd.markForCheck();
-  }
+  // change() {
+  //   this.cd.markForCheck();
+  // }
 
   public ngAfterViewInit () {
     if (this.selectComponent) {

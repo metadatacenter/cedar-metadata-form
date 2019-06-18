@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -55,7 +54,7 @@ export class FormComponent implements OnChanges {
   private formChanges: Subscription;
   changeLog: string[] = [];
 
-  constructor(database: TemplateParserService, private ref: ChangeDetectorRef, private elementRef: ElementRef) {
+  constructor(database: TemplateParserService, private elementRef: ElementRef) {
     this.pageEvent = {'previousPageIndex': 0, 'pageIndex': 0, 'pageSize': 1, 'length': 0};
     this.database = database;
     this.dataSource = new MatTreeNestedDataSource();
@@ -68,34 +67,34 @@ export class FormComponent implements OnChanges {
     // }, 1000);
   }
 
-  update() {
-    setTimeout(() => {
-      this.ref.detectChanges();
-    });
-  }
+  // update() {
+  //   setTimeout(() => {
+  //     this.ref.detectChanges();
+  //   });
+  // }
 
   mouseover() {
-    setTimeout(() => {
-      // reposition tooltips
-      const btn = this.elementRef.nativeElement.querySelector('button.mat-icon-button.help .mat-icon');
-      const tips = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
-      if (tips) {
-        const rect = btn.getBoundingClientRect();
-        const value = 'max-width:25em;width:100%;position:absolute;top:' + (rect.top - 25) + 'px;left:' + (rect.right + 5) + 'px';
-        tips.forEach((tip) => {
-          tip.setAttribute('style', value);
-        });
-      }
-      this.ref.detectChanges();
-    });
+    // setTimeout(() => {
+    //   // reposition tooltips
+    //   const btn = this.elementRef.nativeElement.querySelector('button.mat-icon-button.help .mat-icon');
+    //   const tips = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
+    //   if (tips) {
+    //     const rect = btn.getBoundingClientRect();
+    //     const value = 'max-width:25em;width:100%;position:absolute;top:' + (rect.top - 25) + 'px;left:' + (rect.right + 5) + 'px';
+    //     tips.forEach((tip) => {
+    //       tip.setAttribute('style', value);
+    //     });
+    //   }
+    //   this.ref.detectChanges();
+    // });
   }
 
   mouseout() {
-    const value = 'position:absolute;top:-1000px;left:-1000px';
-    document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel').forEach((tip) => {
-      tip.setAttribute('style', value);
-    });
-    this.ref.detectChanges();
+    // const value = 'position:absolute;top:-1000px;left:-1000px';
+    // document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel').forEach((tip) => {
+    //   tip.setAttribute('style', value);
+    // });
+    // this.ref.detectChanges();
   }
 
   onPageChange(event) {
@@ -112,19 +111,19 @@ export class FormComponent implements OnChanges {
   onChanges(): void {
     if (this.form && this.form.valueChanges) {
       this.form.valueChanges.subscribe(val => {
-        this.ref.detectChanges();
+        // this.ref.detectChanges();
       });
     }
 
     if (this.autocompleteResults && this.autocompleteResults.valueChanges) {
       this.autocompleteResults.valueChanges.subscribe(value => {
-        this.ref.detectChanges();
+        // this.ref.detectChanges();
       });
     }
 
     if (this.instance && this.instance.valueChanges) {
       this.instance.valueChanges.subscribe(value => {
-        this.ref.detectChanges();
+        // this.ref.detectChanges();
       });
     }
   }
@@ -165,11 +164,13 @@ export class FormComponent implements OnChanges {
 
   getPageCount(nodes: TreeNode[]) {
     let count = 0;
-    nodes.forEach(function (node) {
-      if (InputTypeService.isPageBreak(node.subtype)) {
-        count++;
-      }
-    });
+    if (nodes) {
+      nodes.forEach(function (node) {
+        if (InputTypeService.isPageBreak(node.subtype)) {
+          count++;
+        }
+      });
+    }
     return count + 1;
   }
 
@@ -201,7 +202,7 @@ export class FormComponent implements OnChanges {
     parentGroup.addControl((clonedNode.key + clonedNode.itemCount), clonedNode.formGroup);
     this.database.dataChange.next(this.database.data);
 
-    this.ref.detectChanges();
+    // this.ref.detectChanges();
   }
 
   // delete last element in node array
@@ -221,7 +222,7 @@ export class FormComponent implements OnChanges {
     parent.removeControl((node.key + node.itemCount));
     this.database.dataChange.next(this.database.data);
 
-    this.ref.detectChanges();
+    // this.ref.detectChanges();
   }
 
 

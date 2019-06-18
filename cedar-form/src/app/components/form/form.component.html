@@ -29,7 +29,7 @@
 
       <li>
         <div class="mat-tree-node">
-          <button mat-icon-button matTreeNodeToggle (click)="update()"
+          <button mat-icon-button matTreeNodeToggle
             [attr.aria-label]="'toggle ' + node.filename">
             <mat-icon class="mat-icon-rtl-mirror">
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}

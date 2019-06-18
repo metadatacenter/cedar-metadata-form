@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -47,7 +46,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   hideDelay = {value: 0};
   offScreen = 'position:absolute;top:-1000px;left:-1000px';
 
-  constructor(private elementRef: ElementRef, private ref: ChangeDetectorRef, private fb: FormBuilder, db: TemplateParserService) {
+  constructor(private elementRef: ElementRef,  private fb: FormBuilder, db: TemplateParserService) {
     this.database = db;
   }
 
