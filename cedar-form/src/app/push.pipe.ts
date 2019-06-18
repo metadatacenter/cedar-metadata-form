@@ -1,5 +1,4 @@
-
-import {ChangeDetectorRef, EventEmitter, OnDestroy, Pipe, PipeTransform, WrappedValue, ɵisObservable, ɵisPromise} from '@angular/core';
+import {ChangeDetectorRef, EventEmitter, OnDestroy, Pipe, PipeTransform, WrappedValue} from '@angular/core';
 import {Observable, SubscriptionLike} from 'rxjs';
 
 /**
@@ -20,10 +19,11 @@ export class PushPipe implements OnDestroy, PipeTransform {
   private _latestValue: any = null;
   private _latestReturnedValue: any = null;
 
-  private _subscription: SubscriptionLike|null = null;
-  private _obj: Observable<any>|EventEmitter<any>|null = null;
+  private _subscription: SubscriptionLike | null = null;
+  private _obj: Observable<any> | EventEmitter<any> | null = null;
 
-  constructor(private _ref: ChangeDetectorRef) {}
+  constructor(private _ref: ChangeDetectorRef) {
+  }
 
   ngOnDestroy(): void {
     if (this._subscription) {
@@ -33,8 +33,8 @@ export class PushPipe implements OnDestroy, PipeTransform {
 
   transform<T>(obj: null): null;
   transform<T>(obj: undefined): undefined;
-  transform<T>(obj: Observable<T>|null|undefined): T|null;
-  transform(obj: Observable<any>|null|undefined): any {
+  transform<T>(obj: Observable<T> | null | undefined): T | null;
+  transform(obj: Observable<any> | null | undefined): any {
     if (!this._obj) {
       if (obj) {
         this._obj = obj;

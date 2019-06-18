@@ -32,8 +32,8 @@ export class ControlledComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() group: FormGroup;
   @Input() autocompleteResults;
   @Input() valueConstraints: any;
-  @ViewChild('autocompleteInput', { static: true }) autocompleteInput: ElementRef;
-  @ViewChild('chipList', { static: true }) chipList: ElementRef;
+  @ViewChild('autocompleteInput', {static: true}) autocompleteInput: ElementRef;
+  @ViewChild('chipList', {static: true}) chipList: ElementRef;
   @Output() onSelectedOption = new EventEmitter();
   @Output() onRemovedOption = new EventEmitter();
   @Output() autocomplete = new EventEmitter<any>();
@@ -67,8 +67,12 @@ export class ControlledComponent implements OnInit, OnChanges, AfterViewInit {
 
         // and sort
         posts = posts.sort((leftSide, rightSide): number => {
-          if (leftSide.prefLabel.toLowerCase() < rightSide.prefLabel.toLowerCase()) { return -1; }
-          if (leftSide.prefLabel.toLowerCase() > rightSide.prefLabel.toLowerCase()) { return 1; }
+          if (leftSide.prefLabel.toLowerCase() < rightSide.prefLabel.toLowerCase()) {
+            return -1;
+          }
+          if (leftSide.prefLabel.toLowerCase() > rightSide.prefLabel.toLowerCase()) {
+            return 1;
+          }
           return 0;
         });
 

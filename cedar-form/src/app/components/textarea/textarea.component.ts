@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {TreeNode} from '../../models/tree-node.model';
-
 
 
 @Component({

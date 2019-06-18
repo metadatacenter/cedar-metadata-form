@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -20,8 +21,8 @@ import {TemplateParserService} from '../../services/template-parser.service';
 import {InstanceService} from '../../services/instance.service';
 import {ValidatorService} from '../../services/validator.service';
 import {faAsterisk} from '@fortawesome/free-solid-svg-icons';
-import {MatTooltip} from '@angular/material';
 import {TooltipPosition} from '@angular/material/tooltip';
+
 
 
 @Component({
@@ -32,7 +33,7 @@ import {TooltipPosition} from '@angular/material/tooltip';
   encapsulation: ViewEncapsulation.None
 })
 export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
-  // @ViewChild('tooltip', {static: true}) tooltip: MatTooltip;
+  @ViewChild('help', {static: false}) help: ElementRef;
   @Input() node: TreeNode;
   @Input() parentGroup: FormGroup;
   @Input() autocompleteResults: any;
@@ -40,14 +41,11 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   @Output() changed = new EventEmitter<any>();
   @Output() autocomplete = new EventEmitter<any>();
 
-
   faAsterisk = faAsterisk;
   database: TemplateParserService;
   formGroup: FormGroup;
-  _yt;
-  player;
 
-  constructor(private fb: FormBuilder,  db: TemplateParserService) {
+  constructor(private elementRef: ElementRef, private ref: ChangeDetectorRef, private fb: FormBuilder, db: TemplateParserService) {
     this.database = db;
   }
 
@@ -68,6 +66,32 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     });
   }
 
+  mouseover() {
+    setTimeout(() => {
+      // reposition tooltips
+      const btn = this.elementRef.nativeElement.querySelector('button.mat-icon-button.help');
+      const tips = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
+      if (tips) {
+        const rect = btn.getBoundingClientRect();
+        const value = 'max-width:25em;width:100%;position:absolute;top:' + (rect.top - 25) + 'px;left:' + (rect.right + 5) + 'px';
+        tips.forEach((tip) => {
+          tip.setAttribute('style', value);
+        });
+      }
+      this.ref.detectChanges();
+    });
+  }
+
+  mouseout() {
+    // reposition tooltips
+    const tips = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
+    if (tips) {
+      const value = 'position:absolute;top:-1000px;left:-1000px';
+      tips.forEach((tip) => {
+        tip.setAttribute('style', value);
+      });
+    }
+  }
 
   ngAfterViewInit() {
   }
@@ -355,7 +379,6 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     }
     return arr;
   }
-
 
 
 }

@@ -28,8 +28,7 @@ import {SectionComponent} from './components/section/section.component';
 import {ImageComponent} from './components/image/image.component';
 import {RichtextComponent} from './components/richtext/richtext.component';
 import {OverlayModule} from '@angular/cdk/overlay';
-import { TooltipDirective } from './components/tooltip/tooltip.directive';
-import { TooltipComponent } from './components/tooltip/tooltip.component';
+
 
 
 @NgModule({
@@ -50,9 +49,7 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
     SectionComponent,
     TextareaComponent,
     TextfieldComponent,
-    YoutubeComponent,
-    TooltipDirective,
-    TooltipComponent,
+    YoutubeComponent
   ],
   imports: [
     BrowserModule,
@@ -70,8 +67,7 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
   bootstrap: [],
   entryComponents: [
     AppComponent,
-    FormComponent,
-    TooltipComponent
+    FormComponent
   ]
 })
 export class AppModule {

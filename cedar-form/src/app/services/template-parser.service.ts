@@ -16,12 +16,6 @@ import {InstanceService} from './instance.service';
 @Injectable()
 export class TemplateParserService {
 
-  formGroup: FormGroup;
-  pageIndex: number;
-  dataChange = new BehaviorSubject<TreeNode[]>([]);
-  instanceModel: Metadata;
-  templateSchema: TemplateSchema;
-
   constructor(@Inject('instance') @Optional() public instance?: any, @Inject('template') @Optional() public template?: any) {
     this.templateSchema = template as TemplateSchema;
     this.instanceModel = instance as Metadata;
@@ -31,25 +25,19 @@ export class TemplateParserService {
     return this.dataChange.value;
   }
 
-  getTitle() {
-    return this.instance ? TemplateService.getTitle(this.template, null) : "";
-  }
-
-  initialize(formGroup: FormGroup, instance: any, template: any, page: number): any {
-    this.templateSchema = template as TemplateSchema;
-    this.instanceModel = (instance || {}) as Metadata;
-    this.formGroup = formGroup;
-    this.pageIndex = 0;
-    this.dataChange.next(this.buildTree(this.templateSchema, this.instanceModel, 0, this.formGroup, null, page));
-  }
+  formGroup: FormGroup;
+  pageIndex: number;
+  dataChange = new BehaviorSubject<TreeNode[]>([]);
+  instanceModel: Metadata;
+  templateSchema: TemplateSchema;
 
   static getOptions(schema: TemplateSchema, inputType: InputType) {
-    let options: any[] = [];
+    const options: any[] = [];
     if (InputTypeService.isRadioCheckList(inputType)) {
       const literals = TemplateService.getLiterals(schema);
       for (let i = 0; i < literals.length; i++) {
-        let val: any = literals[i];
-        let obj = {};
+        const val: any = literals[i];
+        const obj = {};
         obj['label'] = val.label;
         obj['value'] = i;
         options.push(obj);
@@ -118,7 +106,14 @@ export class TemplateParserService {
     return result;
   }
 
-  static staticNode(schema: TemplateSchema, model: Metadata, inputType: InputType, minItems, maxItems, key: string, modelValue: MetadataSnip, formGroup: FormGroup, parent: TreeNode): TreeNode {
+  static staticNode(schema: TemplateSchema,
+                    model: Metadata,
+                    inputType: InputType,
+                    minItems, maxItems,
+                    key: string,
+                    modelValue: MetadataSnip,
+                    formGroup: FormGroup,
+                    parent: TreeNode): TreeNode {
     const nodeType = TemplateService.getNodeType(inputType);
     const nodeSubtype = TemplateService.getNodeSubtype(inputType);
     return {
@@ -138,6 +133,48 @@ export class TemplateParserService {
       'staticValue': TemplateService.getContent(schema),
       'size': TemplateService.getSize(schema)
     };
+  }
+
+  static attributeValueNode(schema: TemplateSchema,
+                            model: any,
+                            key: string,
+                            modelValue: any,
+                            formGroup: FormGroup,
+                            parent: TreeNode): TreeNode {
+    const nodeType = TemplateParserService.getNodeType(schema, InputType.attributeValue);
+    const nodeSubtype = TemplateParserService.getNodeSubtype(InputType.attributeValue);
+    return {
+      'key': key,
+      'name': TemplateService.getTitle(schema),
+      'type': nodeType,
+      'subtype': nodeSubtype,
+      'model': model,
+      'min': TemplateService.getMin(schema),
+      'max': TemplateService.getMax(schema),
+      'itemCount': 0,
+
+      'formGroup': formGroup,
+      'parentGroup': parent ? parent.formGroup : null,
+      'parent': parent,
+
+      'required': TemplateService.isRequired(schema),
+      'valueLocation': TemplateService.getValueLocation(schema, nodeType, nodeSubtype),
+      'help': TemplateService.getHelp(schema),
+      'placeholder': TemplateService.getPlaceholder(schema),
+      'hint': TemplateService.getHint(schema)
+    };
+  }
+
+  getTitle() {
+    return this.instance ? TemplateService.getTitle(this.template, null) : '';
+  }
+
+  initialize(formGroup: FormGroup, instance: any, template: any, page: number): any {
+    this.templateSchema = template as TemplateSchema;
+    this.instanceModel = (instance || {}) as Metadata;
+    this.formGroup = formGroup;
+    this.pageIndex = 0;
+    this.dataChange.next(this.buildTree(this.templateSchema, this.instanceModel, 0, this.formGroup, null, page));
   }
 
   fieldNode(schema: TemplateSchema, model: Metadata, propertyLabel: string, inputType: InputType, minItems, maxItems, key: string, modelValue: MetadataSnip, formGroup: FormGroup, parent: TreeNode): TreeNode {
@@ -179,7 +216,7 @@ export class TemplateParserService {
 
   getFirst(value, index) {
     if (Array.isArray(value)) {
-      return value[index]
+      return value[index];
     } else {
       return value;
     }
@@ -211,36 +248,11 @@ export class TemplateParserService {
     return node;
   }
 
-  static attributeValueNode(schema: TemplateSchema, model: any, key: string, modelValue: any, formGroup: FormGroup, parent: TreeNode): TreeNode {
-    const nodeType = TemplateParserService.getNodeType(schema, InputType.attributeValue);
-    const nodeSubtype = TemplateParserService.getNodeSubtype(InputType.attributeValue);
-    return {
-      'key': key,
-      'name': TemplateService.getTitle(schema),
-      'type': nodeType,
-      'subtype': nodeSubtype,
-      'model': model,
-      'min': TemplateService.getMin(schema),
-      'max': TemplateService.getMax(schema),
-      'itemCount': 0,
-
-      'formGroup': formGroup,
-      'parentGroup': parent ? parent.formGroup : null,
-      'parent': parent,
-
-      'required': TemplateService.isRequired(schema),
-      'valueLocation': TemplateService.getValueLocation(schema, nodeType, nodeSubtype),
-      'help': TemplateService.getHelp(schema),
-      'placeholder': TemplateService.getPlaceholder(schema),
-      'hint': TemplateService.getHint(schema)
-    };
-  }
-
   // build the tree of FileNodes
   buildTree(parentSchema: TemplateSchema, model: Metadata, level: number, formGroup: FormGroup, parentNode: TreeNode, page: number): TreeNode[] {
-    let order = TemplateService.getOrderofPage(parentSchema, page);
-    let properties = TemplateService.getProperties(parentSchema);
-    let labels = TemplateService.getLabels(parentSchema);
+    const order = TemplateService.getOrderofPage(parentSchema, page);
+    const properties = TemplateService.getProperties(parentSchema);
+    const labels = TemplateService.getLabels(parentSchema);
 
     return order.reduce<TreeNode[]>((accumulator, key) => {
       if (!TemplateService.isSpecialKey(key)) {
@@ -253,15 +265,14 @@ export class TemplateParserService {
         const label = labels[key];
 
 
-
-        if (!model.hasOwnProperty(key) ) {
+        if (!model.hasOwnProperty(key)) {
 
           model['@context'][key] = schema['@id'];
 
           if (TemplateService.isElement(schema)) {
-            model[key] = TemplateService.initValue(schema,key, InputType.element, minItems, maxItems);
+            model[key] = TemplateService.initValue(schema, key, InputType.element, minItems, maxItems);
 
-          } else if (TemplateService.isField(schema)){
+          } else if (TemplateService.isField(schema)) {
             model[key] = TemplateService.initValue(schema, key, type, minItems, maxItems);
 
           }
@@ -270,26 +281,26 @@ export class TemplateParserService {
 
         if (TemplateService.isElement(schema)) {
 
-          let itemCount = modelValue.length ? modelValue.length : 1;
+          const itemCount = modelValue.length ? modelValue.length : 1;
 
           for (let i = 0; i < itemCount; i++) {
-            let node = this.elementNode(schema, model, label, minItems, maxItems, i, key, level, modelValue, formGroup, parentNode, 0);
+            const node = this.elementNode(schema, model, label, minItems, maxItems, i, key, level, modelValue, formGroup, parentNode, 0);
             accumulator = accumulator.concat(node);
           }
 
         } else if (TemplateService.isStaticField(schema)) {
-          let node = TemplateParserService.staticNode(schema, model, type, minItems, maxItems, key, modelValue, formGroup, parentNode);
+          const node = TemplateParserService.staticNode(schema, model, type, minItems, maxItems, key, modelValue, formGroup, parentNode);
           accumulator = accumulator.concat(node);
 
         } else if (TemplateService.isField(schema)) {
 
           if (InputTypeService.isAttributeValue(type)) {
             const items = InstanceService.buildAttributeValue(model, key);
-            let node = TemplateParserService.attributeValueNode(schema, model, key, items, formGroup, parentNode);
+            const node = TemplateParserService.attributeValueNode(schema, model, key, items, formGroup, parentNode);
             accumulator = accumulator.concat(node);
 
           } else {
-            let node = this.fieldNode(schema, model, label, type, minItems, maxItems, key, modelValue, formGroup, parentNode);
+            const node = this.fieldNode(schema, model, label, type, minItems, maxItems, key, modelValue, formGroup, parentNode);
             accumulator = accumulator.concat(node);
           }
         }

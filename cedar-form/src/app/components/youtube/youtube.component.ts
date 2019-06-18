@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {TreeNode} from '../../models/tree-node.model';
 import {NgxYoutubePlayerModule} from 'ngx-youtube-player';
 

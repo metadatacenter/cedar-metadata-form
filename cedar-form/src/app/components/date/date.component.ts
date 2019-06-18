@@ -1,16 +1,27 @@
-import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {TreeNode} from '../../models/tree-node.model';
-import {MatDatepicker} from '@angular/material';
 
 @Component({
   selector: 'app-date',
   templateUrl: './date.component.html',
-  styleUrls: ['./date.component.less']
+  styleUrls: ['./date.component.less'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DateComponent implements OnInit, AfterViewInit {
-  @ViewChild('picker', {static: true}) picker: MatDatepicker<Date>;
-  @ViewChild('toggle', {static: true}) toggle;
+  @ViewChild('picker', {static: true}) picker: ElementRef;
+  @ViewChild('toggle', {static: true}) toggle: ElementRef;
   @Input() formGroup: FormGroup;
   @Input() control: FormControl;
   @Input() node: TreeNode;
@@ -18,10 +29,22 @@ export class DateComponent implements OnInit, AfterViewInit {
   @Output() changed = new EventEmitter<any>();
 
 
-  constructor() {
+  constructor(private ref: ChangeDetectorRef, private elementRef: ElementRef) {
   }
 
   ngAfterViewInit(): void {
+    if (this.picker) {
+      const toggle = this.elementRef.nativeElement.querySelector('.mat-datepicker-toggle > button');
+      if (toggle) {
+        // Listen for click event on toggle icon to force ui update
+        // Need to do this when change detection is noop with Angular Elements
+        toggle.addEventListener('click', () => {
+          setTimeout(() => {
+            this.ref.detectChanges();
+          });
+        });
+      }
+    }
   }
 
   ngOnInit() {
@@ -43,6 +66,10 @@ export class DateComponent implements OnInit, AfterViewInit {
         'index': 0,
         'location': this.node.valueLocation,
         'value': value
+      });
+
+      setTimeout(() => {
+        this.ref.detectChanges();
       });
     });
   }

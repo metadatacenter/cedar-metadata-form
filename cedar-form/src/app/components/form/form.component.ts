@@ -1,4 +1,15 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChange, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChange,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {MatTreeNestedDataSource, PageEvent} from '@angular/material';
 import {NestedTreeControl} from '@angular/cdk/tree';
@@ -29,6 +40,7 @@ export class FormComponent implements OnChanges {
   @Input() disabled: boolean;
   @Input() autocompleteResults: any;
   @Output() autocomplete = new EventEmitter<any>();
+  @ViewChild('help', {static: true}) help: ElementRef;
 
 
   title: string;
@@ -41,8 +53,9 @@ export class FormComponent implements OnChanges {
   copy = 'Copy';
   remove = 'Remove';
   private formChanges: Subscription;
+  changeLog: string[] = [];
 
-  constructor(database: TemplateParserService, private ref: ChangeDetectorRef) {
+  constructor(database: TemplateParserService, private ref: ChangeDetectorRef, private elementRef: ElementRef) {
     this.pageEvent = {'previousPageIndex': 0, 'pageIndex': 0, 'pageSize': 1, 'length': 0};
     this.database = database;
     this.dataSource = new MatTreeNestedDataSource();
@@ -52,10 +65,32 @@ export class FormComponent implements OnChanges {
     this.ref.detach();
     setInterval(() => {
       this.ref.detectChanges();
-    }, 100);
+    }, 1000);
   }
 
-  changeLog: string[] = [];
+  mouseover() {
+    setTimeout(() => {
+      // reposition tooltips
+      const btn = this.elementRef.nativeElement.querySelector('button.mat-icon-button.help .mat-icon');
+      const tips = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
+      if (tips) {
+        const rect = btn.getBoundingClientRect();
+        const value = 'max-width:25em;width:100%;position:absolute;top:' + (rect.top - 25) + 'px;left:' + (rect.right + 5) + 'px';
+        tips.forEach((tip) => {
+          tip.setAttribute('style', value);
+        });
+      }
+      this.ref.detectChanges();
+    });
+  }
+
+  mouseout() {
+    const value = 'position:absolute;top:-1000px;left:-1000px';
+    document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel').forEach((tip) => {
+      tip.setAttribute('style', value);
+    });
+    this.ref.detectChanges();
+  }
 
   onPageChange(event) {
     this.pageEvent = event;
@@ -69,19 +104,19 @@ export class FormComponent implements OnChanges {
 
   // keep up-to-date on changes in the form
   onChanges(): void {
-    if (this.form) {
+    if (this.form && this.form.valueChanges) {
       this.form.valueChanges.subscribe(val => {
         this.ref.detectChanges();
       });
     }
 
-    if (this.autocompleteResults) {
+    if (this.autocompleteResults && this.autocompleteResults.valueChanges) {
       this.autocompleteResults.valueChanges.subscribe(value => {
         this.ref.detectChanges();
       });
     }
 
-    if (this.instance) {
+    if (this.instance && this.instance.valueChanges) {
       this.instance.valueChanges.subscribe(value => {
         this.ref.detectChanges();
       });
@@ -90,7 +125,7 @@ export class FormComponent implements OnChanges {
 
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    if ( changes['autocompleteResults'] &&  changes['autocompleteResults']['currentValue'].length > 0) {
+    if (changes['autocompleteResults'] && changes['autocompleteResults']['currentValue'].length > 0) {
       this.autocompleteResults = changes['autocompleteResults']['currentValue'];
     } else {
       this.initialize();
