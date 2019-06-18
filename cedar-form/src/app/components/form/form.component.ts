@@ -62,10 +62,16 @@ export class FormComponent implements OnChanges {
     this.treeControl = new NestedTreeControl<TreeNode>(this._getChildren);
 
     // living without zone.js
-    this.ref.detach();
-    setInterval(() => {
+    // this.ref.detach();
+    // setInterval(() => {
+    //   this.ref.detectChanges();
+    // }, 1000);
+  }
+
+  update() {
+    setTimeout(() => {
       this.ref.detectChanges();
-    }, 1000);
+    });
   }
 
   mouseover() {

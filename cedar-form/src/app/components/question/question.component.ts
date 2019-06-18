@@ -21,8 +21,7 @@ import {TemplateParserService} from '../../services/template-parser.service';
 import {InstanceService} from '../../services/instance.service';
 import {ValidatorService} from '../../services/validator.service';
 import {faAsterisk} from '@fortawesome/free-solid-svg-icons';
-import {TooltipPosition} from '@angular/material/tooltip';
-
+import {MatTooltip} from '@angular/material';
 
 
 @Component({
@@ -33,7 +32,7 @@ import {TooltipPosition} from '@angular/material/tooltip';
   encapsulation: ViewEncapsulation.None
 })
 export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
-  @ViewChild('help', {static: false}) help: ElementRef;
+  @ViewChild('tooltip', {static: false}) tooltip: MatTooltip;
   @Input() node: TreeNode;
   @Input() parentGroup: FormGroup;
   @Input() autocompleteResults: any;
@@ -44,6 +43,9 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   faAsterisk = faAsterisk;
   database: TemplateParserService;
   formGroup: FormGroup;
+  showDelay = {value: 0};
+  hideDelay = {value: 0};
+  offScreen = 'position:absolute;top:-1000px;left:-1000px';
 
   constructor(private elementRef: ElementRef, private ref: ChangeDetectorRef, private fb: FormBuilder, db: TemplateParserService) {
     this.database = db;
@@ -67,33 +69,41 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   mouseover() {
-    setTimeout(() => {
-      // reposition tooltips
-      const btn = this.elementRef.nativeElement.querySelector('button.mat-icon-button.help');
-      const tips = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
-      if (tips) {
-        const rect = btn.getBoundingClientRect();
-        const value = 'max-width:25em;width:100%;position:absolute;top:' + (rect.top - 25) + 'px;left:' + (rect.right + 5) + 'px';
-        tips.forEach((tip) => {
-          tip.setAttribute('style', value);
-        });
-      }
-      this.ref.detectChanges();
-    });
+    // setTimeout(() => {
+    //   // reposition tooltips
+    //   const btn = this.elementRef.nativeElement.querySelector('button.mat-icon-button.help');
+    //   const panels = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
+    //   if (panels) {
+    //     const rect = btn.getBoundingClientRect();
+    //     const value = 'position:absolute;top:' + (rect.top - 25) + 'px;left:' + (rect.right + 5) + 'px';
+    //     panels.forEach((panel) => {
+    //       panel.setAttribute('style', value);
+    //       // const tip = panel.querySelector('.mat-tooltip');
+    //       // if (tip) {
+    //       //   tip.setAttribute('style', 'max-width:25em;width:100%;background:red');
+    //       // }
+    //     });
+    //   }
+    //   this.ref.detectChanges();
+    // });
   }
 
   mouseout() {
-    // reposition tooltips
-    const tips = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
-    if (tips) {
-      const value = 'position:absolute;top:-1000px;left:-1000px';
-      tips.forEach((tip) => {
-        tip.setAttribute('style', value);
-      });
-    }
+    // // setTimeout(() => {
+    //   // reposition tooltips
+    //   const panels = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
+    //   if (panels) {
+    //     panels.forEach((panel) => {
+    //       panel.setAttribute('style', 'position:absolute;top:-1000px;left:-1000px');
+    //     });
+    //   }
+    // setTimeout(() => {
+    //   this.ref.detectChanges();
+    // });
   }
 
   ngAfterViewInit() {
+    console.log('tooltip', this.tooltip);
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {

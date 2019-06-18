@@ -16,7 +16,10 @@
 
     <span *ngIf="node.required" class="required"><fa-icon [icon]="faAsterisk"></fa-icon></span>
 
-    <button  #help  (mouseover)="mouseover()" (mouseout)="mouseout()" matTooltipPosition="right" mat-icon-button class="mat-icon-button help"  *ngIf="node.help"   [matTooltip]="node.help"   >
+    <button  #tooltip="matTooltip"  (mouseover)="mouseover()" (mouseout)="mouseout()" matTooltipPosition="right"
+      mat-icon-button class="mat-icon-button help"  *ngIf="node.help"   [matTooltip]="node.help"
+      [matTooltipShowDelay]="showDelay.value"
+      [matTooltipHideDelay]="hideDelay.value">
       <mat-icon>help_outline</mat-icon>
     </button>
 

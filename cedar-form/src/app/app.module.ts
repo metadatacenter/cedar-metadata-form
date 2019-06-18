@@ -29,6 +29,8 @@ import {ImageComponent} from './components/image/image.component';
 import {RichtextComponent} from './components/richtext/richtext.component';
 import {OverlayModule} from '@angular/cdk/overlay';
 
+import { ElementZoneStrategyFactory } from 'elements-zone-strategy';
+
 
 
 @NgModule({
@@ -85,9 +87,9 @@ export class AppModule {
     // // define in browser registry
     // customElements.define('custom-element', ngCustomElement);
 
-    const ngCedarForm = createCustomElement(FormComponent, {injector});
-
-    // define in browser registry
+    const strategyFactory = new ElementZoneStrategyFactory(FormComponent, this.injector);
+    const ngCedarForm = createCustomElement(FormComponent, { injector: this.injector, strategyFactory });
+    // const ngCedarForm = createCustomElement(FormComponent, {injector});
     customElements.define('cedar-form', ngCedarForm);
 
   }
