@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -30,12 +29,12 @@ import {MatTooltip} from '@angular/material';
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
-export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
+export class QuestionComponent implements OnInit, OnChanges {
   @ViewChild('tooltip', {static: false}) tooltip: MatTooltip;
   @Input() node: TreeNode;
   @Input() parentGroup: FormGroup;
   @Input() autocompleteResults: any;
-  @Input() disabled: boolean;
+  @Input() mode: string;
   @Output() changed = new EventEmitter<any>();
   @Output() autocomplete = new EventEmitter<any>();
 
@@ -50,9 +49,32 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
     this.database = db;
   }
 
-
   onAutocomplete(event) {
     this.autocomplete.emit(event);
+  }
+
+  getValueConstraints() {
+    let result = '';
+    if (this.node.valueConstraints) {
+      Object.keys(this.node.valueConstraints).forEach(key => {
+        const value = this.node.valueConstraints[key];
+        for (let i = 0; i < this.node.valueConstraints[key].length; i++) {
+          if (key === 'ontologies') {
+            result += ' ' + value[i].acronym + ' Ontology' + ', ';
+          }
+          if (key === 'valueSets') {
+            result += value[i].name +  ' ' + value[i].vsCollection + ' Value Set' + ', ';
+          }
+          if (key === 'classes') {
+            result += value[i].prefLabel + ' class of ' + value[i].source + ', ';
+          }
+          if (key === 'branches') {
+            result += value[i].name +  ' branch of ' + value[i].acronym + ', ';
+          }
+        }
+      });
+    }
+    return result.trim().replace(/(^,)|(,$)/g, '');
   }
 
   onChange(event) {
@@ -68,42 +90,11 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   mouseover() {
-    // setTimeout(() => {
-    //   // reposition tooltips
-    //   const btn = this.elementRef.nativeElement.querySelector('button.mat-icon-button.help');
-    //   const panels = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
-    //   if (panels) {
-    //     const rect = btn.getBoundingClientRect();
-    //     const value = 'position:absolute;top:' + (rect.top - 25) + 'px;left:' + (rect.right + 5) + 'px';
-    //     panels.forEach((panel) => {
-    //       panel.setAttribute('style', value);
-    //       // const tip = panel.querySelector('.mat-tooltip');
-    //       // if (tip) {
-    //       //   tip.setAttribute('style', 'max-width:25em;width:100%;background:red');
-    //       // }
-    //     });
-    //   }
-    //   this.ref.detectChanges();
-    // });
   }
 
   mouseout() {
-    // // setTimeout(() => {
-    //   // reposition tooltips
-    //   const panels = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
-    //   if (panels) {
-    //     panels.forEach((panel) => {
-    //       panel.setAttribute('style', 'position:absolute;top:-1000px;left:-1000px');
-    //     });
-    //   }
-    // setTimeout(() => {
-    //   this.ref.detectChanges();
-    // });
   }
 
-  ngAfterViewInit() {
-    console.log('tooltip', this.tooltip);
-  }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     if (changes['autocompleteResults']) {
@@ -127,27 +118,26 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
       case InputType.pageBreak:
       case InputType.richText:
         this.formGroup = this.fb.group({values: this.fb.array([])});
-        this.parentGroup.setControl(this.node.key, this.formGroup);
         break;
 
       case InputType.controlled:
-        this.formGroup = this.fb.group({values: this.fb.array(this.buildControlled(this.node, this.disabled))});
+        this.formGroup = this.fb.group({values: this.fb.array(this.buildControlled(this.node, false))});
         this.parentGroup.setControl(this.node.key, this.formGroup);
-        this.setDisable(this.formGroup, this.disabled);
+        this.setDisable(this.formGroup, this.mode === 'view');
         break;
 
       case InputType.date:
-        this.formGroup = this.fb.group({values: this.fb.array(this.allowMultipleControls(this.node, this.disabled, validators))});
+        this.formGroup = this.fb.group({values: this.fb.array(this.allowMultipleControls(this.node, false, validators))});
         // this.formGroup.updateValueAndValidity({onlySelf: true, emitEvent: true});
         this.parentGroup.setControl(this.node.key, this.formGroup);
-        this.setDisable(this.formGroup, this.disabled);
+        this.setDisable(this.formGroup, this.mode === 'view');
         break;
 
       case InputType.textfield:
       case InputType.textarea:
-        this.formGroup = this.fb.group({values: this.fb.array(this.allowMultipleControls(this.node, this.disabled, validators))});
+        this.formGroup = this.fb.group({values: this.fb.array(this.allowMultipleControls(this.node, false, validators))});
         this.parentGroup.setControl(this.node.key, this.formGroup);
-        this.setDisable(this.formGroup, this.disabled);
+        this.setDisable(this.formGroup, this.mode === 'view');
         break;
 
       case InputType.radio:
@@ -156,13 +146,13 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
         obj[name] = new FormControl(this.fb.array([]));
         this.formGroup = this.fb.group(obj);
         this.parentGroup.setControl(this.node.key, this.formGroup);
-        this.setDisable(this.formGroup, this.disabled);
+        this.setDisable(this.formGroup, this.mode === 'view');
         break;
 
       case InputType.checkbox:
-        this.formGroup = this.fb.group({values: this.fb.array(this.allowMultipleOptions(this.node, this.disabled))});
+        this.formGroup = this.fb.group({values: this.fb.array(this.allowMultipleOptions(this.node, false))});
         this.parentGroup.setControl(this.node.key, this.formGroup);
-        this.setDisable(this.formGroup, this.disabled);
+        this.setDisable(this.formGroup, this.mode === 'view');
         break;
 
       case InputType.list:
@@ -171,15 +161,16 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
         obj[name] = new FormControl(this.fb.array([]));
         this.formGroup = this.fb.group(obj);
         this.parentGroup.setControl(this.node.key, this.formGroup);
-        this.setDisable(this.formGroup, this.disabled);
         break;
 
       case InputType.attributeValue:
-        this.formGroup = this.fb.group({values: this.fb.array(this.buildAV(this.node, this.disabled))});
+        this.formGroup = this.fb.group({values: this.fb.array(this.buildAV(this.node, false))});
         this.parentGroup.setControl(this.node.key, this.formGroup);
-        this.setDisable(this.formGroup, this.disabled);
+        this.setDisable(this.formGroup, this.mode === 'view');
         break;
     }
+
+
   }
 
   setDisable(formGroup: FormGroup, disabled) {
@@ -229,7 +220,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
       case InputType.controlled:
         clonedModel = Object.assign({}, node.model[node.key][index]);
         this.node.model[node.key].splice(index, 0, node.model[node.key][index]);
-        this.formGroup.setControl('values', this.fb.array(this.buildControlled(node, this.disabled)));
+        this.formGroup.setControl('values', this.fb.array(this.buildControlled(node, false)));
         break;
 
       case InputType.textfield:
@@ -247,7 +238,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
         } else {
           this.node.model[node.key] = [null, null];
         }
-        this.formGroup.setControl('values', this.fb.array(this.allowMultipleControls(node, this.disabled, validators)));
+        this.formGroup.setControl('values', this.fb.array(this.allowMultipleControls(node, false, validators)));
         // this.formGroup.updateValueAndValidity({onlySelf: true, emitEvent: true});
         break;
     }
@@ -259,7 +250,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
 
       case InputType.controlled:
         node.model[node.key].splice(index, 1);
-        this.formGroup.setControl('values', this.fb.array(this.buildControlled(node, this.disabled)));
+        this.formGroup.setControl('values', this.fb.array(this.buildControlled(node, false)));
         break;
 
       case InputType.textfield:
@@ -267,7 +258,7 @@ export class QuestionComponent implements OnInit, OnChanges, AfterViewInit {
       case InputType.date:
         node.model[this.node.key].splice(index, 1);
         // this.formGroup.updateValueAndValidity({onlySelf: false, emitEvent: true});
-        this.formGroup.setControl('values', this.fb.array(this.allowMultipleControls(node, this.disabled, validators)));
+        this.formGroup.setControl('values', this.fb.array(this.allowMultipleControls(node, false, validators)));
         break;
     }
   }

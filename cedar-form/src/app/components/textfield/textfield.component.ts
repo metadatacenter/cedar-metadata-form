@@ -17,6 +17,8 @@ export class TextfieldComponent implements OnInit {
   @Input() index: number;
   @Input() disabled: boolean;
   @Output() changed = new EventEmitter<any>();
+  @Input() mode: string;
+
 
   constructor() { }
 

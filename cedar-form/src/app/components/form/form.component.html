@@ -1,6 +1,6 @@
 
 <div class=".cedar-form-body">
-<h2>{{title}} <button (mouseover)="mouseover()" (mouseout)="mouseout()" mat-icon-button class="mat-icon-button help" *ngIf="description" matTooltipPosition="right" [matTooltip]="description">
+<h2 *ngIf="mode === 'edit'">{{title}} <button  mat-icon-button class="mat-icon-button help" *ngIf="description" matTooltipPosition="right" [matTooltip]="description">
   <mat-icon>help_outline</mat-icon>
 </button></h2>
 
@@ -20,7 +20,7 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
       <li class="mat-tree-node">
         <button mat-icon-button disabled></button>
-        <app-question [disabled]="disabled" [node]="node" (autocomplete)="onAutocomplete($event)"
+        <app-question  [node]="node" [mode]="mode" (autocomplete)="onAutocomplete($event)"
           [autocompleteResults]="autocompleteResults" [parentGroup]="node.formGroup"
           style="width:100%"></app-question>
       </li>
@@ -38,20 +38,20 @@
           <span><label class="element-label" [attr.for]="node.name">{{node.name}}
             <span style="font-weight:normal" *ngIf="node.multiSelect">({{(node.itemCount + 1)}}  of {{ node.maxItems || 'N'}})</span></label>
 
-          <button #help (mouseover)="mouseover()" (mouseout)="mouseout()" mat-icon-button class="mat-icon-button help" *ngIf="node.help" matTooltipPosition="right" [matTooltip]="node.help">
+          <button   mat-icon-button class="mat-icon-button help" *ngIf="node.help" matTooltipPosition="right" [matTooltip]="node.help">
             <mat-icon>help_outline</mat-icon>
           </button>
-          <button mat-icon-button class="node-add" *ngIf="!disabled && node.multiSelect" (click)="copyItem(node)">
+          <button mat-icon-button class="node-add" *ngIf="mode === 'edit' && node.multiSelect" (click)="copyItem(node)">
             <mat-icon>add_circle_outline</mat-icon>
           </button>
-          <button mat-icon-button class="node-remove" *ngIf="!disabled && node.multiSelect"
+          <button mat-icon-button class="node-remove" *ngIf="mode === 'edit' && node.multiSelect"
             (click)="removeItem(node)">
             <mat-icon>remove_circle_outline</mat-icon>
           </button></span>
         </div>
 
         <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)" *ngIf="treeControl.isExpanded(node)">
-          <app-element *ngIf="treeControl.isExpanded(node)" [node]="node" [parentGroup]="node.parentGroup"
+          <app-element *ngIf="treeControl.isExpanded(node)" [node]="node" [mode]="mode" [parentGroup]="node.parentGroup"
             [formGroup]="node.formGroup" [index]="node.itemCount"></app-element>
           <ng-container matTreeNodeOutlet></ng-container>
         </ul>

@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -21,7 +20,7 @@ import {Post} from '../../models/post.model';
   templateUrl: './controlled.component.html',
   styleUrls: ['./controlled.component.less']
 })
-export class ControlledComponent implements OnInit, OnChanges, AfterViewInit {
+export class ControlledComponent implements OnInit, OnChanges {
 
   allPosts: Post[];
   selectable = true;
@@ -37,16 +36,11 @@ export class ControlledComponent implements OnInit, OnChanges, AfterViewInit {
   @Output() onSelectedOption = new EventEmitter();
   @Output() onRemovedOption = new EventEmitter();
   @Output() autocomplete = new EventEmitter<any>();
+  @Input() mode: string;
+
 
 
   constructor(private fb: FormBuilder) {
-  }
-
-  mark(source: string) {
-    // this.cd.markForCheck();
-  }
-
-  ngAfterViewInit() {
   }
 
   filterItems(arr, query) {
@@ -84,6 +78,7 @@ export class ControlledComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log('valueConstraints', this.valueConstraints);
     this.group.controls['values']['controls'][0].get('search').valueChanges.pipe(debounceTime(500)).subscribe(val => {
       this.search = val;
       this.autocomplete.emit({'search': val, 'constraints': this.valueConstraints});

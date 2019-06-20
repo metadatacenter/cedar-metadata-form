@@ -3,6 +3,7 @@
     <div *ngFor="let control of formGroup.controls['values']['controls']; let i=index">
 
       <mat-checkbox type=”checkbox”
+        [disabled]="mode ==='view'"
         [formControl]='control'
         [aria-label]="node.options[i]['label']">
         {{node.options[i]['label']}}

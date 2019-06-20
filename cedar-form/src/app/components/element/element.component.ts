@@ -16,6 +16,7 @@ export class ElementComponent implements OnInit {
   @Input() parentGroup: FormGroup;
   @Input() formGroup: FormGroup;
   @Input() index: number;
+  @Input() mode: string;
 
   constructor() {
   }
