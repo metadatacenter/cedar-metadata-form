@@ -5,7 +5,7 @@
     [formControl]="control">
   <mat-hint>{{node.hint}}</mat-hint>
   <mat-datepicker-toggle #toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker touchUi></mat-datepicker>
+  <mat-datepicker #picker ></mat-datepicker>
   <mat-error *ngIf="control['hasError']('matDatepickerParse')">
     Value must be a <strong>date</strong>
   </mat-error>

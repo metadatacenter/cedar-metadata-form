@@ -1,19 +1,14 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
-  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {TreeNode} from '../../models/tree-node.model';
-import {Overlay} from '@angular/cdk/overlay';
-import {MatSelect} from '@angular/material';
+
 
 
 @Component({
@@ -22,25 +17,13 @@ import {MatSelect} from '@angular/material';
   styleUrls: ['./list.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ListComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatSelect, {static: true}) public selectComponent: MatSelect;
+export class ListComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Input() node: TreeNode;
+  @Input() mode: string;
   @Output() changed = new EventEmitter<any>();
 
-  constructor(private elementRef: ElementRef, private overlay: Overlay, private cd: ChangeDetectorRef) {
-  }
-
-  change() {
-    this.cd.markForCheck();
-  }
-
-  public ngAfterViewInit () {
-    if (this.selectComponent) {
-      this.selectComponent.overlayDir.attach.subscribe((event) => {
-        this.selectComponent.overlayDir.overlayRef.updatePosition();
-      });
-    }
+  constructor() {
   }
 
   ngOnInit() {

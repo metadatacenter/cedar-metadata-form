@@ -16,28 +16,40 @@
 
     <span *ngIf="node.required" class="required"><fa-icon [icon]="faAsterisk"></fa-icon></span>
 
-    <button  #help  (mouseover)="mouseover()" (mouseout)="mouseout()" matTooltipPosition="right" mat-icon-button class="mat-icon-button help"  *ngIf="node.help"   [matTooltip]="node.help"   >
+    <button  #tooltip="matTooltip"  (mouseover)="mouseover()" (mouseout)="mouseout()" matTooltipPosition="right"
+      mat-icon-button class="mat-icon-button help"  *ngIf="node.help"   [matTooltip]="node.help"
+      [matTooltipShowDelay]="showDelay.value"
+      [matTooltipHideDelay]="hideDelay.value">
       <mat-icon>help_outline</mat-icon>
     </button>
+
+    <button  #constraints="matTooltip"  (mouseover)="mouseover()" (mouseout)="mouseout()" matTooltipPosition="right"
+      mat-icon-button class="mat-icon-button help"  *ngIf="getValueConstraints().length"   [matTooltip]="getValueConstraints()"
+      [matTooltipShowDelay]="showDelay.value"
+      [matTooltipHideDelay]="hideDelay.value">
+      <mat-icon>info_outline</mat-icon>
+    </button>
+
 
 
     <div *ngIf="node.type == 'attribute-value' || node.type == 'list' || node.type == 'controlled' || node.type == 'checkbox' || node.type == 'radio'">
 
       <app-attribute-value *ngIf="node.type == 'attribute-value'" [formGroup]="formGroup" [node]="node"
-        [disabled]="disabled"
         (changed)="onChange($event)"></app-attribute-value>
 
       <app-list *ngIf="node.type == 'list'" [formGroup]="formGroup" [node]="node"
+        [mode]="mode"
         (changed)="onChange($event)"></app-list>
 
       <app-controlled *ngIf="node.type == 'controlled'" [group]="formGroup"
+        [mode]="mode"
         [valueConstraints]="node.valueConstraints"
         [autocompleteResults]="autocompleteResults"
         (autocomplete)="onAutocomplete($event)"
         (onRemovedOption)="onRemovedControlled($event)"
         (onSelectedOption)="onSelectedControlled($event)"></app-controlled>
 
-      <app-checkbox *ngIf="node.type == 'checkbox'" [formGroup]="formGroup" [node]="node"
+      <app-checkbox *ngIf="node.type == 'checkbox'" [formGroup]="formGroup" [node]="node" [mode]="mode"
         (changed)="onChange($event)"></app-checkbox>
 
       <app-radio *ngIf="node.type == 'radio'" [formGroup]="formGroup" [node]="node"
@@ -51,16 +63,21 @@
 
           <div *ngIf="node.multiSelect" style="padding-top:.5em">
             {{node.name}}  ({{(i + 1)}}  of {{ node.maxItems || 'N' }})
-            <button mat-icon-button class="node-add" *ngIf="!disabled" (click)="copyItem(node,i)">
+            <button mat-icon-button class="node-add" *ngIf="mode === 'edit'" (click)="copyItem(node,i)">
               <mat-icon>add_circle_outline</mat-icon>
             </button>
-            <button mat-icon-button class="node-remove" *ngIf="!disabled" (click)="removeItem(node,i)">
+            <button mat-icon-button class="node-remove" *ngIf="mode === 'edit'" (click)="removeItem(node,i)">
               <mat-icon>remove_circle_outline</mat-icon>
             </button>
           </div>
 
-          <app-textfield *ngSwitchCase="'textfield'" [formGroup]="formGroup" [control]="control" [node]="node"
-            [index]="i" [disabled]="disabled" (changed)="onChange($event)"></app-textfield>
+          <app-textfield *ngSwitchCase="'textfield'"
+            [formGroup]="formGroup"
+            [control]="control"
+            [node]="node"
+            [mode]="mode"
+            [index]="i"
+            (changed)="onChange($event)"></app-textfield>
 
           <app-textarea *ngSwitchCase="'textarea'" [formGroup]="formGroup" [control]="control" [node]="node"
             [index]="i" (changed)="onChange($event)"></app-textarea>

@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -29,22 +28,22 @@ export class DateComponent implements OnInit, AfterViewInit {
   @Output() changed = new EventEmitter<any>();
 
 
-  constructor(private ref: ChangeDetectorRef, private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef) {
   }
 
   ngAfterViewInit(): void {
-    if (this.picker) {
-      const toggle = this.elementRef.nativeElement.querySelector('.mat-datepicker-toggle > button');
-      if (toggle) {
-        // Listen for click event on toggle icon to force ui update
-        // Need to do this when change detection is noop with Angular Elements
-        toggle.addEventListener('click', () => {
-          setTimeout(() => {
-            this.ref.detectChanges();
-          });
-        });
-      }
-    }
+    // if (this.picker) {
+    //   const toggle = this.elementRef.nativeElement.querySelector('.mat-datepicker-toggle > button');
+    //   if (toggle) {
+    //     // Listen for click event on toggle icon to force ui update
+    //     // Need to do this when change detection is noop with Angular Elements
+    //     // toggle.addEventListener('click', () => {
+    //        // setTimeout(() => {
+    //       //   this.ref.detectChanges();
+    //       // });
+    //     // });
+    //   }
+    // }
   }
 
   ngOnInit() {
@@ -68,9 +67,9 @@ export class DateComponent implements OnInit, AfterViewInit {
         'value': value
       });
 
-      setTimeout(() => {
-        this.ref.detectChanges();
-      });
+      // setTimeout(() => {
+      //   this.ref.detectChanges();
+      // });
     });
   }
 

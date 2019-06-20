@@ -1,20 +1,7 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChange,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChange, ViewChild, ViewEncapsulation} from '@angular/core';
+import {FormArray, FormControl, FormGroup} from '@angular/forms';
 import {MatTreeNestedDataSource, PageEvent} from '@angular/material';
 import {NestedTreeControl} from '@angular/cdk/tree';
-import {Subscription} from 'rxjs';
-
 
 import * as cloneDeep from 'lodash/cloneDeep';
 import {TemplateParserService} from '../../services/template-parser.service';
@@ -37,9 +24,11 @@ export class FormComponent implements OnChanges {
   @Input() form: FormGroup;
   @Input() instance: any;
   @Input() template: any;
-  @Input() disabled: boolean;
+  @Input() mode: string;
   @Input() autocompleteResults: any;
   @Output() autocomplete = new EventEmitter<any>();
+  @Output() formChange = new EventEmitter<any>();
+
   @ViewChild('help', {static: true}) help: ElementRef;
 
 
@@ -52,44 +41,14 @@ export class FormComponent implements OnChanges {
   pageEvent: PageEvent;
   copy = 'Copy';
   remove = 'Remove';
-  private formChanges: Subscription;
   changeLog: string[] = [];
 
-  constructor(database: TemplateParserService, private ref: ChangeDetectorRef, private elementRef: ElementRef) {
+  constructor(database: TemplateParserService, private elementRef: ElementRef) {
     this.pageEvent = {'previousPageIndex': 0, 'pageIndex': 0, 'pageSize': 1, 'length': 0};
     this.database = database;
     this.dataSource = new MatTreeNestedDataSource();
     this.treeControl = new NestedTreeControl<TreeNode>(this._getChildren);
-
-    // living without zone.js
-    this.ref.detach();
-    setInterval(() => {
-      this.ref.detectChanges();
-    }, 1000);
-  }
-
-  mouseover() {
-    setTimeout(() => {
-      // reposition tooltips
-      const btn = this.elementRef.nativeElement.querySelector('button.mat-icon-button.help .mat-icon');
-      const tips = document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel');
-      if (tips) {
-        const rect = btn.getBoundingClientRect();
-        const value = 'max-width:25em;width:100%;position:absolute;top:' + (rect.top - 25) + 'px;left:' + (rect.right + 5) + 'px';
-        tips.forEach((tip) => {
-          tip.setAttribute('style', value);
-        });
-      }
-      this.ref.detectChanges();
-    });
-  }
-
-  mouseout() {
-    const value = 'position:absolute;top:-1000px;left:-1000px';
-    document.querySelectorAll('.cdk-overlay-pane.mat-tooltip-panel').forEach((tip) => {
-      tip.setAttribute('style', value);
-    });
-    this.ref.detectChanges();
+    this.form = new FormGroup({});
   }
 
   onPageChange(event) {
@@ -98,30 +57,10 @@ export class FormComponent implements OnChanges {
   }
 
   onAutocomplete(event) {
+    console.log('onAutocomplete', event);
     this.autocomplete.emit(event);
   }
 
-
-  // keep up-to-date on changes in the form
-  onChanges(): void {
-    if (this.form && this.form.valueChanges) {
-      this.form.valueChanges.subscribe(val => {
-        this.ref.detectChanges();
-      });
-    }
-
-    if (this.autocompleteResults && this.autocompleteResults.valueChanges) {
-      this.autocompleteResults.valueChanges.subscribe(value => {
-        this.ref.detectChanges();
-      });
-    }
-
-    if (this.instance && this.instance.valueChanges) {
-      this.instance.valueChanges.subscribe(value => {
-        this.ref.detectChanges();
-      });
-    }
-  }
 
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -153,22 +92,26 @@ export class FormComponent implements OnChanges {
           this.treeControl = new NestedTreeControl<TreeNode>(this._getChildren);
         }
       });
+
+      this.emitChanges(this.form.value);
       this.onChanges();
     }
   }
 
   getPageCount(nodes: TreeNode[]) {
     let count = 0;
-    nodes.forEach(function (node) {
-      if (InputTypeService.isPageBreak(node.subtype)) {
-        count++;
-      }
-    });
+    if (nodes) {
+      nodes.forEach(function (node) {
+        if (InputTypeService.isPageBreak(node.subtype)) {
+          count++;
+        }
+      });
+    }
     return count + 1;
   }
 
   isDisabled() {
-    return this.disabled;
+    return this.mode === 'view';
   }
 
   // add new element to form
@@ -195,7 +138,7 @@ export class FormComponent implements OnChanges {
     parentGroup.addControl((clonedNode.key + clonedNode.itemCount), clonedNode.formGroup);
     this.database.dataChange.next(this.database.data);
 
-    this.ref.detectChanges();
+    // this.ref.detectChanges();
   }
 
   // delete last element in node array
@@ -215,7 +158,7 @@ export class FormComponent implements OnChanges {
     parent.removeControl((node.key + node.itemCount));
     this.database.dataChange.next(this.database.data);
 
-    this.ref.detectChanges();
+    // this.ref.detectChanges();
   }
 
 
@@ -240,6 +183,41 @@ export class FormComponent implements OnChanges {
         });
       }
 
+    }
+  }
+
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({onlySelf: true});
+      } else if (control instanceof FormArray) {
+        control.controls.forEach(cntl => {
+          cntl.markAsTouched({onlySelf: true});
+        });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+  }
+
+  emitChanges(val) {
+    this.validateAllFormFields(this.form);
+    this.formChange.emit({
+      'title': this.title,
+      'description': this.description,
+      'valid': this.form.valid,
+      'value': val
+    });
+  }
+
+  // notify caller of changes in the form
+  onChanges(): void {
+    if (this.form && this.form.valueChanges) {
+      this.form.valueChanges.subscribe(val => {
+        this.emitChanges(val);
+      });
     }
   }
 

@@ -1,10 +1,9 @@
 <mat-form-field class="mat-form-field list-opened" [formGroup]="formGroup">
   <mat-select
-    (click)="change()"
     [multiple]="node.multipleChoice"
     [formControlName]="node.key + 'list'"
     [required]="node.required">
-    <mat-option *ngFor="let opt of node.options; index as i" [value]="i">{{opt['label']}}</mat-option>
+    <mat-option [disabled]="mode ==='view'" *ngFor="let opt of node.options; index as i" [value]="i">{{opt['label']}}</mat-option>
   </mat-select>
   <mat-hint>{{node.hint}}</mat-hint>
 </mat-form-field>

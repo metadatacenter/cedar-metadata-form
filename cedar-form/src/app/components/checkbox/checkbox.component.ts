@@ -13,13 +13,9 @@ export class CheckboxComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Input() control: FormControl;
   @Input() node: TreeNode;
+  @Input() mode: string;
   @Input() index: number;
   @Output() changed = new EventEmitter<any>();
-
-
-
-
-
 
   ngOnInit() {
     // initialize the value
@@ -64,14 +60,14 @@ export class CheckboxComponent implements OnInit {
   getValue(literals, model, valueLocation) {
     const result = [];
     const map = this.getLiteralMap(literals);
+    map.forEach(function () {
+      result.push(false);
+    });
+
     if (model) {
       for (let i = 0; i < model.length; i++) {
-        result.push(map.indexOf(model[i][valueLocation]) > -1);
+        result[map.indexOf(model[i][valueLocation])] = true;
       }
-    } else {
-      map.forEach(function () {
-        result.push(false);
-      });
     }
     return result;
   }
@@ -79,13 +75,14 @@ export class CheckboxComponent implements OnInit {
   // get the form value into the model
   setValue(value, literals, model, valueLocation) {
     const result = [];
-    value.forEach(function (val, i) {
-      if (val) {
-        const obj = {};
-        obj[valueLocation] = literals[i]['label'];
-        result.push(obj);
-      }
-    });
+    const map = this.getLiteralMap(literals);
+
+    for (let i = 0; i < value.length; i++) {
+      const obj = {};
+      obj[valueLocation] = map[value[i]];
+      result.push(obj);
+    }
+
     return result;
   }
 }

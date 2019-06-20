@@ -1,16 +1,13 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {Subscription} from 'rxjs';
 import {TreeNode} from '../../models/tree-node.model';
-
 
 
 @Component({
   selector: 'app-element',
   templateUrl: './element.component.html',
   styleUrls: ['./element.component.less'],
-  providers: [],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  providers: []
 })
 export class ElementComponent implements OnInit {
 
@@ -19,10 +16,7 @@ export class ElementComponent implements OnInit {
   @Input() parentGroup: FormGroup;
   @Input() formGroup: FormGroup;
   @Input() index: number;
-
-
-  darkMode: boolean;
-  private _darkModeSub: Subscription;
+  @Input() mode: string;
 
   constructor() {
   }

@@ -24,7 +24,13 @@ if (environment.production) {
 
 
 // living without zone.js
+// platformBrowserDynamic()
+//   .bootstrapModule(
+//     AppModule, { ngZone: 'noop' })
+//   .catch(err => console.log(err));
+
+
 platformBrowserDynamic()
   .bootstrapModule(
-    AppModule, { ngZone: 'noop' })
+    AppModule, )
   .catch(err => console.log(err));
