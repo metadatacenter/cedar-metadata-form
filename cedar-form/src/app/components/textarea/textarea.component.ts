@@ -6,7 +6,7 @@ import {TreeNode} from '../../models/tree-node.model';
 @Component({
   selector: 'app-textarea',
   templateUrl: './textarea.component.html',
-  styleUrls: ['./textarea.component.less']
+  styleUrls: ['./textarea.component.scss']
 })
 export class TextareaComponent implements OnInit {
   @Input() formGroup: FormGroup;

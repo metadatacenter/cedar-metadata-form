@@ -14,7 +14,7 @@ import {InstanceService} from '../../services/instance.service';
 @Component({
   selector: 'app-metadata-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.less'],
+  styleUrls: ['./form.component.scss'],
   providers: [TemplateParserService],
   encapsulation: ViewEncapsulation.None
 })

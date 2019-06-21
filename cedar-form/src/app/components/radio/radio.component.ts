@@ -5,7 +5,7 @@ import {TreeNode} from '../../models/tree-node.model';
 @Component({
   selector: 'app-radio',
   templateUrl: './radio.component.html',
-  styleUrls: ['./radio.component.less']
+  styleUrls: ['./radio.component.scss']
 })
 export class RadioComponent implements OnInit {
   @Input() formGroup: FormGroup;

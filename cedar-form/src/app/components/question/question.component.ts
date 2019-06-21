@@ -25,7 +25,7 @@ import {MatTooltip} from '@angular/material';
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.less'],
+  styleUrls: ['./question.component.scss'],
   providers: [],
   encapsulation: ViewEncapsulation.None
 })

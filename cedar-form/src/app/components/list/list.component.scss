@@ -1,4 +1,4 @@
-@import '~src/colors.less';
+@import '~src/theme.scss';
 
 .mat-form-field {
   margin-bottom:10px;
@@ -10,26 +10,26 @@
   color: rgba(0, 0, 0, 0.87);
 }
 
-.mat-input-element:disabled {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline {
-  background-image: none;
-  border-bottom:1px solid rgba(0, 0, 0, 0.54);
-}
-
-.mat-select-disabled .mat-select-value {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mat-option.mat-option-disabled {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled, .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled {
-  background: @cedar-accent
-}
+//.mat-input-element:disabled {
+//  color: rgba(0, 0, 0, 0.87);
+//}
+//
+//.mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline {
+//  background-image: none;
+//  border-bottom:1px solid rgba(0, 0, 0, 0.54);
+//}
+//
+//.mat-select-disabled .mat-select-value {
+//  color: rgba(0, 0, 0, 0.87);
+//}
+//
+//.mat-option.mat-option-disabled {
+//  color: rgba(0, 0, 0, 0.87);
+//}
+//
+//.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled, .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled {
+//  background: mat-color($my-app-accent, 500);
+//}
 
 :host ::ng-deep .mat-form-field-disabled .mat-form-field-underline {
   color: rgba(0, 0, 0, 0.87);
@@ -51,5 +51,5 @@
 
 
 :host ::ng-deep .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled, .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled {
-  background-color: @cedar-accent
+  background-color: mat-color($my-app-accent, 500);
 }

@@ -6,7 +6,7 @@ import {TreeNode} from '../../models/tree-node.model';
 @Component({
   selector: 'app-image',
   templateUrl: './image.component.html',
-  styleUrls: ['./image.component.less']
+  styleUrls: ['./image.component.scss']
 })
 export class ImageComponent implements OnInit {
   @Input() formGroup: FormGroup;
