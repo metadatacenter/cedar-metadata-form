@@ -1,8 +1,10 @@
 
 <div class=".cedar-form-body">
-<h2 *ngIf="mode === 'edit'">{{title}} <button  mat-icon-button class="mat-icon-button help" *ngIf="description" matTooltipPosition="right" [matTooltip]="description">
+<h2 >{{title}}
+  <button  mat-icon-button class="mat-icon-button help" *ngIf="description" matTooltipPosition="right" [matTooltip]="description">
   <mat-icon>help_outline</mat-icon>
-</button></h2>
+</button>
+</h2>
 
 <form [formGroup]="form" *ngIf="form" class="cedar-form">
 
