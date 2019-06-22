@@ -6,7 +6,7 @@ import {TreeNode} from '../../models/tree-node.model';
 @Component({
   selector: 'app-checkbox',
   templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.less']
+  styleUrls: ['./checkbox.component.scss']
 
 })
 export class CheckboxComponent implements OnInit {

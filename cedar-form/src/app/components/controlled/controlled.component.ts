@@ -18,7 +18,7 @@ import {Post} from '../../models/post.model';
 @Component({
   selector: 'app-controlled',
   templateUrl: './controlled.component.html',
-  styleUrls: ['./controlled.component.less']
+  styleUrls: ['./controlled.component.scss']
 })
 export class ControlledComponent implements OnInit, OnChanges {
 

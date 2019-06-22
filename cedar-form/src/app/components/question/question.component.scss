@@ -1,4 +1,4 @@
-@import '~src/colors.less';
+@import '~src/theme.scss';
 
 label.question-label {
   margin: 10px 0 0 0;
@@ -94,10 +94,8 @@ mat-hint {
 
 
 .section-break {
-  color: #bbb;
   font-size: 2.5vw;
   width: 100%;
-  border-bottom: solid #bbb 1px;
   margin: 20px 0;
 }
 
@@ -214,7 +212,7 @@ button.mat-icon-button.node-add, button.mat-icon-button.node-remove {
 }
 
 .required {
-  color: @cedar-warn;
+  color: mat-color($my-app-warn);
   font-size: .8em;
   padding: 0 .8em;
 }

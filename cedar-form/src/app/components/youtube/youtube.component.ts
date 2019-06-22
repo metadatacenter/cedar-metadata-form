@@ -6,7 +6,7 @@ import {NgxYoutubePlayerModule} from 'ngx-youtube-player';
 @Component({
   selector: 'app-youtube',
   templateUrl: './youtube.component.html',
-  styleUrls: ['./youtube.component.less']
+  styleUrls: ['./youtube.component.scss']
 })
 
 

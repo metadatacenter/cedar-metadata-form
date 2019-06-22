@@ -6,7 +6,7 @@ import {TemplateService} from '../../services/template.service';
 @Component({
   selector: 'app-attribute-value',
   templateUrl: './attribute-value.component.html',
-  styleUrls: ['./attribute-value.component.less']
+  styleUrls: ['./attribute-value.component.scss']
 })
 export class AttributeValueComponent implements OnInit {
   @Input() formGroup: FormGroup;

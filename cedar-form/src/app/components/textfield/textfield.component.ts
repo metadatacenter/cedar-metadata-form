@@ -8,7 +8,7 @@ import {ValidatorService} from '../../services/validator.service';
 @Component({
   selector: 'app-textfield',
   templateUrl: './textfield.component.html',
-  styleUrls: ['./textfield.component.less']
+  styleUrls: ['./textfield.component.scss']
 })
 export class TextfieldComponent implements OnInit {
   @Input() formGroup: FormGroup;

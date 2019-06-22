@@ -6,18 +6,12 @@ import {TreeNode} from '../../models/tree-node.model';
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.less']
+  styleUrls: ['./section.component.scss']
 })
-export class SectionComponent implements OnInit {
+export class SectionComponent  {
   @Input() formGroup: FormGroup;
   @Input() node: TreeNode;
 
   constructor() {
   }
-
-  ngOnInit() {
-  }
-
-
-
 }

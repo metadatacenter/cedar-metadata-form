@@ -1,0 +1,249 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$cedar-tree-green: (
+  50 : #ebeeef,
+  100 : #ccd5d8,
+  200 : #aababe,
+  300 : #889ea3,
+  400 : #6f8990,
+  500 : #55747c,
+  600 : #4e6c74,
+  700 : #446169,
+  800 : #3b575f,
+  900 : #2a444c,
+  A100 : #97e5ff,
+  A200 : #64d8ff,
+  A400 : #31ccff,
+  A700 : #18c5ff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$cedar-green: (
+  50 : #e4edf0,
+  100 : #bcd3d9,
+  200 : #90b6bf,
+  300 : #6499a5,
+  400 : #428392,
+  500 : #216d7f,
+  600 : #1d6577,
+  700 : #185a6c,
+  800 : #145062,
+  900 : #0b3e4f,
+  A100 : #85dcff,
+  A200 : #52cdff,
+  A400 : #1fbfff,
+  A700 : #06b7ff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$cedar-purple: (
+  50 : #e6e7f2,
+  100 : #c2c2dd,
+  200 : #999ac7,
+  300 : #7071b1,
+  400 : #5152a0,
+  500 : #32348f,
+  600 : #2d2f87,
+  700 : #26277c,
+  800 : #1f2172,
+  900 : #131560,
+  A100 : #989aff,
+  A200 : #6567ff,
+  A400 : #3235ff,
+  A700 : #191cff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
+
+$cedar-orange: (
+  50 : #f9eee6,
+  100 : #f0d5c1,
+  200 : #e6b998,
+  300 : #dc9d6f,
+  400 : #d58850,
+  500 : #cd7331,
+  600 : #c86b2c,
+  700 : #c16025,
+  800 : #ba561f,
+  900 : #ae4313,
+  A100 : #ffe8e0,
+  A200 : #ffc3ad,
+  A400 : #ff9e7a,
+  A700 : #ff8b60,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$cedar-gold: (
+  50 : #f9f0e6,
+  100 : #f0d8c1,
+  200 : #e6bf98,
+  300 : #dca56f,
+  400 : #d59150,
+  500 : #cd7e31,
+  600 : #c8762c,
+  700 : #c16b25,
+  800 : #ba611f,
+  900 : #ae4e13,
+  A100 : #ffeae0,
+  A200 : #ffc9ad,
+  A400 : #ffa77a,
+  A700 : #ff9660,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$cedar-yellow: (
+  50 : #f9f4e6,
+  100 : #f0e4c1,
+  200 : #e6d297,
+  300 : #dcc06d,
+  400 : #d5b34e,
+  500 : #cda52f,
+  600 : #c89d2a,
+  700 : #c19323,
+  800 : #ba8a1d,
+  900 : #ae7912,
+  A100 : #fff3df,
+  A200 : #ffe0ac,
+  A400 : #ffcd79,
+  A700 : #ffc45f,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$cedar-red: (
+  50 : #f8e6e8,
+  100 : #eec0c5,
+  200 : #e3979e,
+  300 : #d76d77,
+  400 : #cf4d59,
+  500 : #c62e3c,
+  600 : #c02936,
+  700 : #b9232e,
+  800 : #b11d27,
+  900 : #a4121a,
+  A100 : #ffd5d7,
+  A200 : #ffa2a6,
+  A400 : #ff6f75,
+  A700 : #ff565d,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+
+
+
+$my-app-primary: mat-palette($cedar-green, 500, 900, A100);
+$my-app-accent:  mat-palette($cedar-yellow, 500, 900, A100);
+$my-app-warn:    mat-palette($cedar-red, 500, 900, A100);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+@include angular-material-theme($my-app-theme);
+
+.alternate-theme {
+  $alternate-primary: mat-palette($cedar-purple);
+  $alternate-accent:  mat-palette($cedar-gold, 400);
+  $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+  @include angular-material-theme($alternate-theme);
+}

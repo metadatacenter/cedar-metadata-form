@@ -15,7 +15,7 @@ import {TreeNode} from '../../models/tree-node.model';
 @Component({
   selector: 'app-date',
   templateUrl: './date.component.html',
-  styleUrls: ['./date.component.less'],
+  styleUrls: ['./date.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class DateComponent implements OnInit, AfterViewInit {
