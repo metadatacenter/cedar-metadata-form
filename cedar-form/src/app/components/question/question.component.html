@@ -21,7 +21,7 @@
       <mat-icon>help_outline</mat-icon>
     </button>
 
-    <button style="padding-left:10px" #constraints="matTooltip"   matTooltipPosition="right"
+    <button  #constraints="matTooltip"   matTooltipPosition="right"
       mat-icon-button class="mat-icon-button help"  *ngIf="getValueConstraints().length"   [matTooltip]="getValueConstraints()">
       <mat-icon>info_outline</mat-icon>
     </button>
