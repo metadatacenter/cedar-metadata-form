@@ -1,10 +1,10 @@
 @import '~src/theme.scss';
 
 .section-break {;
-  color : mat-color($my-app-accent);
+  color : mat-color($my-app-primary);
   font-size: 2.5vw;
   width: 100%;
-  border-bottom: 2px solid mat-color($my-app-accent);
+  border-bottom: 2px solid mat-color($my-app-primary);
   margin: 20px 0;
   //line-height: .75;
 }

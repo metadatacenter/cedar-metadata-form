@@ -239,6 +239,7 @@ export class TemplateParserService {
       'formGroup': new FormGroup({}),
 
       'multiSelect': (minItems !== undefined),
+      'help': TemplateService.getHelp(schema),
     };
     formGroup.addControl(key + i, node.formGroup);
     if (schema.properties) {

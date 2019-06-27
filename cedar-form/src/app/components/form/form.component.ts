@@ -21,7 +21,6 @@ import {InstanceService} from '../../services/instance.service';
 
 export class FormComponent implements OnChanges {
 
-  @Input() form: FormGroup;
   @Input() instance: any;
   @Input() template: any;
   @Input() mode: string;
@@ -32,6 +31,7 @@ export class FormComponent implements OnChanges {
   @ViewChild('help', {static: true}) help: ElementRef;
 
 
+  form: FormGroup;
   title: string;
   description: string;
   dataSource: MatTreeNestedDataSource<TreeNode>;

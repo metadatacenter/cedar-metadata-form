@@ -1,8 +1,9 @@
 @import '~src/theme.scss';
 
 .cedar-form {
-  margin:10px 0;
-  ul,li {
+  margin: 10px 0;
+
+  ul, li {
     margin-top: 0;
     margin-bottom: 0;
     list-style-type: none;
@@ -10,46 +11,44 @@
 }
 
 
-
-button.mat-icon-button.help, button.mat-icon-button.info, button.mat-icon-button.node-add, button.mat-icon-button.node-remove {
+button.mat-icon-button.help, button.mat-icon-button.node-add, button.mat-icon-button.node-remove {
   z-index: 100;
+  position: relative;
   min-width: 0;
-  height: 1em;
-  width: 1em;
-  font-size: 1em;
+  width: 2em;
+  height: 2em;
   line-height: 1em;
-  flex-shrink: 0;
-  border-radius: 50%;
-
+  padding:5px;
 
   .mat-button-wrapper {
     z-index: -100;
-    position:relative;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    height: 1em;
+    display: inherit;
 
     .mat-icon {
-      color: rgba(0, 0, 0, 0.54);
-      height: 1em;
-      width: 1em;
       font-size: 1em;
+      width: 1em;
+      height: 1em;
       line-height: 1em;
       padding: 0;
-      margin: 0;
-      text-align: center;
+      color: rgba(0, 0, 0, 0.54);
     }
   }
-
 }
 
 label.element-label {
   margin: 0;
   font-weight: bolder;
   width: 100%;
-  vertical-align: middle;
+  padding: 0 5px;
 }
 
 .mat-form-field {
-  margin-bottom:10px;
-  width:100%
+  margin-bottom: 10px;
+  width: 100%
 }
 
 
@@ -62,18 +61,18 @@ label.element-label {
 
 .mat-form-field-disabled .mat-form-field-underline, .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline, .mat-form-field-disabled .mat-form-field-underline {
   background-image: none !important;
-  border-bottom:1px solid rgba(0, 0, 0, 0.54) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.54) !important;
 }
 
 .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after, .mat-input-element:disabled {
-  color: rgba(0,0,0,.87) !important;
+  color: rgba(0, 0, 0, .87) !important;
 }
 
 .mat-icon-button[disabled][disabled] {
-  color: rgba(0,0,0,.54) !important;
+  color: rgba(0, 0, 0, .54) !important;
 }
 
-:host ::ng-deep  .mat-input-element:disabled {
+:host ::ng-deep .mat-input-element:disabled {
   color: rgba(0, 0, 0, 0.87);
 }
 
@@ -91,19 +90,16 @@ label.element-label {
 
 .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline {
   background-image: none;
-  border-bottom:1px solid rgba(0, 0, 0, 0.54);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.54);
 }
 
-:host ::ng-deep   .mat-radio-button.mat-radio-disabled.mat-radio-checked .mat-radio-outer-circle,  .mat-radio-button.mat-radio-disabled.mat-radio-checked .mat-radio-inner-circle  {
-  border-color: mat-color($my-app-accent, 500);
+.mat-radio-button.mat-radio-disabled.mat-radio-checked .mat-radio-inner-circle {
+  background-color: mat-color($my-app-accent, 500) !important;
 }
 
-:host ::ng-deep   .mat-radio-button.mat-radio-disabled.mat-radio-checked .mat-radio-inner-circle  {
-  background: mat-color($my-app-accent, 500);
-}
+.mat-radio-button.mat-radio-disabled.mat-radio-checked .mat-radio-outer-circle {
+  border-color: mat-color($my-app-accent, 500) !important;
 
-.mat-radio-button.mat-radio-disabled .mat-radio-outer-circle,  .mat-radio-button.mat-radio-disabled .mat-radio-inner-circle  {
-  border-color: rgba(0, 0, 0, 0.54) !important;
 }
 
 .mat-radio-button.mat-radio-disabled .mat-radio-label-content {
