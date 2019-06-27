@@ -1,6 +1,6 @@
 <mat-form-field class="full-width">
 
-  <mat-chip-list #chipList>
+  <mat-chip-list #chipList [disabled]="mode === 'view'">
     <mat-chip class="chip" *ngFor="let chip of group.controls['values']['controls'][0].get('chips')['controls']; let i = index;"
       (changed)="add($event)" [selectable]="selectable" [removable]="removable" (removed)="remove(i)">
       <span>{{chip['value']}}</span>

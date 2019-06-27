@@ -16,17 +16,13 @@
 
     <span *ngIf="node.required" class="required"><fa-icon [icon]="faAsterisk"></fa-icon></span>
 
-    <button  #tooltip="matTooltip"  (mouseover)="mouseover()" (mouseout)="mouseout()" matTooltipPosition="right"
-      mat-icon-button class="mat-icon-button help"  *ngIf="node.help"   [matTooltip]="node.help"
-      [matTooltipShowDelay]="showDelay.value"
-      [matTooltipHideDelay]="hideDelay.value">
+    <button  #tooltip="matTooltip"   matTooltipPosition="right"
+      mat-icon-button class="mat-icon-button help"  *ngIf="node.help"   [matTooltip]="node.help">
       <mat-icon>help_outline</mat-icon>
     </button>
 
-    <button  #constraints="matTooltip"  (mouseover)="mouseover()" (mouseout)="mouseout()" matTooltipPosition="right"
-      mat-icon-button class="mat-icon-button help"  *ngIf="getValueConstraints().length"   [matTooltip]="getValueConstraints()"
-      [matTooltipShowDelay]="showDelay.value"
-      [matTooltipHideDelay]="hideDelay.value">
+    <button style="padding-left:10px" #constraints="matTooltip"   matTooltipPosition="right"
+      mat-icon-button class="mat-icon-button help"  *ngIf="getValueConstraints().length"   [matTooltip]="getValueConstraints()">
       <mat-icon>info_outline</mat-icon>
     </button>
 

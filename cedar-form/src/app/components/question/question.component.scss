@@ -128,13 +128,7 @@ mat-hint {
   }
 }
 
-button.mat-icon-button.help {
-  padding: 0;
-  height: 0.8em;
-  width: 1.0em;
-  line-height: 1em;
-  margin: .5em;
-  font-size: 1em;
+button.mat-icon-button.help, button.mat-icon-button.node-add, button.mat-icon-button.node-remove {
   z-index: 100;
   position: relative;
 
@@ -151,41 +145,6 @@ button.mat-icon-button.help {
     }
   }
 }
-
-
-
-
-
-
-.question-icon {
-  //color: #673ab7;
-  color: rgba(0, 0, 0, 0.54);
-  font-size: .9em;
-  padding: 0 .2em;
-}
-
-
-
-button.mat-icon-button.node-add, button.mat-icon-button.node-remove {
-  padding: 0;
-  min-width: 0;
-  width: 2em;
-  height: 2em;
-  flex-shrink: 0;
-  width: 2em;
-  vertical-align: middle;
-  border-radius: 50%;
-  mat-icon {
-    height:1em;
-    width:1em;
-    font-size:1em;
-    line-height: 1em;
-    padding-top:.5em;
-    vertical-align: top;
-    color: rgba(0, 0, 0, .54)
-  }
-}
-
 
 .fa-stack {
   position: relative;
