@@ -56,20 +56,21 @@ export class QuestionComponent implements OnInit, OnChanges {
   getValueConstraints() {
     let result = '';
     if (this.node.valueConstraints) {
+      console.log('valueConstraints', this.node.valueConstraints);
       Object.keys(this.node.valueConstraints).forEach(key => {
         const value = this.node.valueConstraints[key];
         for (let i = 0; i < this.node.valueConstraints[key].length; i++) {
           if (key === 'ontologies') {
-            result += ' ' + value[i].acronym + ' Ontology' + ', ';
+            result += ' ' + value[i].acronym + ' Ontology, ';
           }
           if (key === 'valueSets') {
-            result += value[i].name +  ' ' + value[i].vsCollection + ' Value Set' + ', ';
+            result += '"' + value[i].name +  ' ' + value[i].vsCollection + '" Value Set' + ', ';
           }
           if (key === 'classes') {
-            result += value[i].prefLabel + ' class of ' + value[i].source + ', ';
+            result += '"' + value[i].prefLabel + '" class of ' + value[i].source + ', ';
           }
           if (key === 'branches') {
-            result += value[i].name +  ' branch of ' + value[i].acronym + ', ';
+            result += '"' + value[i].name +  '" branch of ' + value[i].acronym + ', ';
           }
         }
       });

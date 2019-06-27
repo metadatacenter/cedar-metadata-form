@@ -9,28 +9,35 @@
   }
 }
 
-button.mat-icon-button.help, button.mat-icon-button.node-add, button.mat-icon-button.node-remove {
-  padding: 0;
-  height: 0.8em;
-  width: 1.0em;
-  line-height: 1em;
-  margin: .5em;
-  font-size: 1em;
+
+
+button.mat-icon-button.help, button.mat-icon-button.info, button.mat-icon-button.node-add, button.mat-icon-button.node-remove {
   z-index: 100;
-  position: relative;
+  min-width: 0;
+  height: 1em;
+  width: 1em;
+  font-size: 1em;
+  line-height: 1em;
+  flex-shrink: 0;
+  border-radius: 50%;
+
 
   .mat-button-wrapper {
     z-index: -100;
-    position: relative;
+    position:relative;
 
     .mat-icon {
-      font-size: 1em;
-      width: 1em;
-      padding: 0;
-      left: 0;
       color: rgba(0, 0, 0, 0.54);
+      height: 1em;
+      width: 1em;
+      font-size: 1em;
+      line-height: 1em;
+      padding: 0;
+      margin: 0;
+      text-align: center;
     }
   }
+
 }
 
 label.element-label {

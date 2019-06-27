@@ -23,8 +23,8 @@ import {Post} from '../../models/post.model';
 export class ControlledComponent implements OnInit, OnChanges {
 
   allPosts: Post[];
-  selectable = true;
-  removable = true;
+  selectable: boolean;
+  removable: boolean;
   isLoading = false;
   search;
 
@@ -41,6 +41,8 @@ export class ControlledComponent implements OnInit, OnChanges {
 
 
   constructor(private fb: FormBuilder) {
+    this.removable = this.mode === 'edit';
+    this.selectable = this.mode === 'edit';
   }
 
   filterItems(arr, query) {
@@ -119,14 +121,16 @@ export class ControlledComponent implements OnInit, OnChanges {
 
   // chip was removed
   remove(index: number): void {
-    const chips = this.group.controls['values']['controls'][0].get('chips') as FormArray;
-    const ids = this.group.controls['values']['controls'][0].get('ids') as FormArray;
+    if (this.removable) {
+      const chips = this.group.controls['values']['controls'][0].get('chips') as FormArray;
+      const ids = this.group.controls['values']['controls'][0].get('ids') as FormArray;
 
-    if (index >= 0) {
-      chips.removeAt(index);
-      ids.removeAt(index);
+      if (index >= 0) {
+        chips.removeAt(index);
+        ids.removeAt(index);
+      }
+      this.onRemovedOption.emit(index);
     }
-    this.onRemovedOption.emit(index);
   }
 
   // chip was selected
