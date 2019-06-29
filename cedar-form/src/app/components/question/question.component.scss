@@ -6,6 +6,16 @@ label.question-label {
   width: 100%;
 }
 
+.question-icon {
+  color: rgba(0, 0, 0, 0.38);
+  padding: 0 .5em;
+}
+
+.required {
+  color: mat-color($my-app-warn);
+  font-size: .5em;
+  vertical-align: super;
+}
 
 .mat-form-field {
   margin-bottom: 10px;
@@ -127,27 +137,6 @@ mat-hint {
   }
 }
 
-//button.mat-icon-button.help, button.mat-icon-button.node-add, button.mat-icon-button.node-remove {
-//  z-index: 100;
-//  position: relative;
-//
-//  .mat-button-wrapper {
-//    z-index: -100;
-//    position: relative;
-//    padding: 0;
-//    margin: 0;
-//    height: 1em;
-//    display: inherit;
-//
-//    .mat-icon {
-//      font-size: 1em;
-//      width: 1em;
-//      padding: 0;
-//      left: 0;
-//      color: rgba(0, 0, 0, 0.54);
-//    }
-//  }
-//}
 
 .fa-stack {
   position: relative;
@@ -173,11 +162,7 @@ mat-hint {
   font-size: 1.2em;
 }
 
-.required {
-  color: mat-color($my-app-warn);
-  font-size: .8em;
-  padding: 0 .8em;
-}
+
 
 
 

@@ -23,26 +23,22 @@ import {Post} from '../../models/post.model';
 export class ControlledComponent implements OnInit, OnChanges {
 
   allPosts: Post[];
-  selectable: boolean;
-  removable: boolean;
+  selectable = true;
+  removable = true;
   isLoading = false;
   search;
 
+  @Input() mode: string;
   @Input() group: FormGroup;
   @Input() autocompleteResults;
   @Input() valueConstraints: any;
+  @Output() selectedOption = new EventEmitter();
+  @Output() removedOption = new EventEmitter();
+  @Output() autocomplete = new EventEmitter<any>();
   @ViewChild('autocompleteInput', {static: true}) autocompleteInput: ElementRef;
   @ViewChild('chipList', {static: true}) chipList: ElementRef;
-  @Output() onSelectedOption = new EventEmitter();
-  @Output() onRemovedOption = new EventEmitter();
-  @Output() autocomplete = new EventEmitter<any>();
-  @Input() mode: string;
-
-
 
   constructor(private fb: FormBuilder) {
-    this.removable = this.mode === 'edit';
-    this.selectable = this.mode === 'edit';
   }
 
   filterItems(arr, query) {
@@ -80,7 +76,8 @@ export class ControlledComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log('valueConstraints', this.valueConstraints);
+    this.removable = this.mode === 'edit';
+    this.selectable = this.mode === 'edit';
     this.group.controls['values']['controls'][0].get('search').valueChanges.pipe(debounceTime(500)).subscribe(val => {
       this.search = val;
       this.autocomplete.emit({'search': val, 'constraints': this.valueConstraints});
@@ -129,7 +126,7 @@ export class ControlledComponent implements OnInit, OnChanges {
         chips.removeAt(index);
         ids.removeAt(index);
       }
-      this.onRemovedOption.emit(index);
+      this.removedOption.emit(index);
     }
   }
 
@@ -144,7 +141,7 @@ export class ControlledComponent implements OnInit, OnChanges {
     ids.push(this.fb.control(value.toString().trim()));
 
     // notify the parent component of the selection
-    this.onSelectedOption.emit(event.option.value);
+    this.selectedOption.emit(event.option.value);
     this.group.controls['values']['controls'][0].get('search').setValue('');
   }
 

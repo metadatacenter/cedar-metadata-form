@@ -9,6 +9,21 @@ import {TemplateService} from '../../services/template.service';
 import {TreeNode} from '../../models/tree-node.model';
 import {InputTypeService} from '../../services/input-type.service';
 import {InstanceService} from '../../services/instance.service';
+import {
+  faAsterisk,
+  faCalendar,
+  faCheckSquare,
+  faDotCircle,
+  faEnvelope,
+  faExternalLinkAlt,
+  faFont,
+  faHashtag,
+  faLink,
+  faList,
+  faParagraph,
+  faPhoneSquare,
+  faPlusSquare
+} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -37,11 +52,21 @@ export class FormComponent implements OnChanges {
   dataSource: MatTreeNestedDataSource<TreeNode>;
   treeControl: NestedTreeControl<TreeNode>;
   database: TemplateParserService;
-  response: any = {payload: null, jsonLD: null, rdf: null, formValid: false};
   pageEvent: PageEvent;
-  copy = 'Copy';
-  remove = 'Remove';
-  changeLog: string[] = [];
+
+  faAsterisk = faAsterisk;
+  faEnvelope = faEnvelope;
+  faHashtag = faHashtag;
+  faLink = faLink;
+  faFont = faFont;
+  faCalendar = faCalendar;
+  faPhoneSquare = faPhoneSquare;
+  faParagraph = faParagraph;
+  faCheckSquare = faCheckSquare;
+  faList = faList;
+  faDotCircle = faDotCircle;
+  faPlusSquare = faPlusSquare;
+  faExternalLinkAlt = faExternalLinkAlt;
 
   constructor(database: TemplateParserService, private elementRef: ElementRef) {
     this.pageEvent = {'previousPageIndex': 0, 'pageIndex': 0, 'pageSize': 1, 'length': 0};
@@ -57,7 +82,6 @@ export class FormComponent implements OnChanges {
   }
 
   onAutocomplete(event) {
-    console.log('onAutocomplete', event);
     this.autocomplete.emit(event);
   }
 

@@ -12,13 +12,13 @@
 
 
 button.mat-icon-button.help, button.mat-icon-button.node-add, button.mat-icon-button.node-remove {
-  z-index: 100;
+  z-index: 10;
   position: relative;
   min-width: 0;
   width: 2em;
   height: 2em;
   line-height: 1em;
-  padding:5px;
+  padding: 5px;
 
   .mat-button-wrapper {
     z-index: -100;
@@ -35,15 +35,44 @@ button.mat-icon-button.help, button.mat-icon-button.node-add, button.mat-icon-bu
       line-height: 1em;
       padding: 0;
       color: rgba(0, 0, 0, 0.54);
+      position: relative;
+      top: -.1em;
+    }
+  }
+}
+
+.legend {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  box-sizing: content-box;
+  display: block;
+  margin: 0;
+  border-radius: 4px;
+
+  div {
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0.38);
+    padding: 5px;
+    line-height: 2em;
+    font-size: 1em;
+    fa-icon {
+      padding:5px;
+    }
+    .asterisk {
+      color: mat-color($my-app-warn);
     }
   }
 }
 
 label.element-label {
   margin: 0;
-  font-weight: bolder;
+  font-weight: normal;
   width: 100%;
   padding: 0 5px;
+  font-size: larger;
 }
 
 .mat-form-field {
@@ -103,5 +132,5 @@ label.element-label {
 }
 
 .mat-radio-button.mat-radio-disabled .mat-radio-label-content {
-  color: rgba(0,0,0,.87) !important;
+  color: rgba(0, 0, 0, .87) !important;
 }

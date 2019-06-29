@@ -18,7 +18,21 @@ import {TreeNode} from '../../models/tree-node.model';
 import {TemplateParserService} from '../../services/template-parser.service';
 import {InstanceService} from '../../services/instance.service';
 import {ValidatorService} from '../../services/validator.service';
-import {faAsterisk} from '@fortawesome/free-solid-svg-icons';
+import {
+  faAsterisk,
+  faCalendar,
+  faCheckSquare,
+  faDotCircle,
+  faEnvelope,
+  faExternalLinkAlt,
+  faFont,
+  faHashtag,
+  faLink,
+  faList,
+  faParagraph,
+  faPhoneSquare,
+  faPlusSquare
+} from '@fortawesome/free-solid-svg-icons';
 import {MatTooltip} from '@angular/material';
 
 
@@ -39,13 +53,25 @@ export class QuestionComponent implements OnInit, OnChanges {
   @Output() autocomplete = new EventEmitter<any>();
 
   faAsterisk = faAsterisk;
+  faEnvelope = faEnvelope;
+  faHashtag = faHashtag;
+  faLink = faLink;
+  faFont = faFont;
+  faCalendar = faCalendar;
+  faPhoneSquare = faPhoneSquare;
+  faParagraph = faParagraph;
+  faCheckSquare = faCheckSquare;
+  faList = faList;
+  faDotCircle = faDotCircle;
+  faPlusSquare = faPlusSquare;
+  faExternalLinkAlt = faExternalLinkAlt;
   database: TemplateParserService;
   formGroup: FormGroup;
   showDelay = {value: 0};
   hideDelay = {value: 0};
   offScreen = 'position:absolute;top:-1000px;left:-1000px';
 
-  constructor(private elementRef: ElementRef,  private fb: FormBuilder, db: TemplateParserService) {
+  constructor(private elementRef: ElementRef, private fb: FormBuilder, db: TemplateParserService) {
     this.database = db;
   }
 
@@ -56,21 +82,56 @@ export class QuestionComponent implements OnInit, OnChanges {
   getValueConstraints() {
     let result = '';
     if (this.node.valueConstraints) {
-      console.log('valueConstraints', this.node.valueConstraints);
       Object.keys(this.node.valueConstraints).forEach(key => {
         const value = this.node.valueConstraints[key];
-        for (let i = 0; i < this.node.valueConstraints[key].length; i++) {
-          if (key === 'ontologies') {
-            result += ' ' + value[i].acronym + ' Ontology, ';
+        if (Array.isArray(value)) {
+          for (let i = 0; i < this.node.valueConstraints[key].length; i++) {
+            switch  (key)  {
+              case 'ontologies':
+                result += ' ' + value[i].acronym + ' Ontology, ';
+                break;
+              case 'valueSets':
+                result += '"' + value[i].name + ' ' + value[i].vsCollection + '" Value Set' + ', ';
+                break;
+              case 'classes':
+                result += '"' + value[i].prefLabel + '" class of ' + value[i].source + ', ';
+                break;
+              case 'branches':
+                result += '"' + value[i].name + '" branch of ' + value[i].acronym + ', ';
+                break;
+              case 'actions':
+                if (value[i].action === 'delete') {
+                  result += '"' + value[i].termUri + '" excluded from ' + value[i].sourceUri + ', ';
+                }
+                break;
+            }
           }
-          if (key === 'valueSets') {
-            result += '"' + value[i].name +  ' ' + value[i].vsCollection + '" Value Set' + ', ';
-          }
-          if (key === 'classes') {
-            result += '"' + value[i].prefLabel + '" class of ' + value[i].source + ', ';
-          }
-          if (key === 'branches') {
-            result += '"' + value[i].name +  '" branch of ' + value[i].acronym + ', ';
+        } else {
+          switch  (key)  {
+            case 'numberType':
+              result += 'Number Type: ' + value + ', ';
+              break;
+            case 'unitOfMeasure':
+              result += 'Unit of Measure: ' + value + ', ';
+              break;
+            case 'minValue':
+              result += 'Min Value: ' + value + ', ';
+              break;
+            case 'maxValue':
+              result += 'Max Value: ' + value + ', ';
+              break;
+            case 'decimalPlace':
+              result += 'Decimal Places: ' + value + ', ';
+              break;
+            case 'defaultValue':
+              result += 'Default Value: ' + value + ', ';
+              break;
+            case 'minLength':
+              result += 'Min Length: ' + value + ', ';
+              break;
+            case 'maxLength':
+              result += 'Max Length: ' + value + ', ';
+              break;
           }
         }
       });
