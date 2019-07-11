@@ -1,6 +1,110 @@
 @import '~@angular/material/theming';
 @include mat-core();
 
+$metadata-center-blue: (
+  50 : #ecf4f8,
+  100 : #cfe3ee,
+  200 : #afd0e2,
+  300 : #8fbdd6,
+  400 : #77aece,
+  500 : #5fa0c5,
+  600 : #5798bf,
+  700 : #4d8eb8,
+  800 : #4384b0,
+  900 : #3273a3,
+  A100 : #ebf6ff,
+  A200 : #b8e0ff,
+  A400 : #85c9ff,
+  A700 : #6cbeff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$metadata-center-dark-blue: (
+  50 : #e5e8eb,
+  100 : #bfc5cd,
+  200 : #959eac,
+  300 : #6a778b,
+  400 : #4a5972,
+  500 : #2a3c59,
+  600 : #253651,
+  700 : #1f2e48,
+  800 : #19273e,
+  900 : #0f1a2e,
+  A100 : #6c9bff,
+  A200 : #3978ff,
+  A400 : #0656ff,
+  A700 : #004beb,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
+
+$metadata-center-green: (
+  50 : #f2f6f4,
+  100 : #dfeae3,
+  200 : #cadcd1,
+  300 : #b5cdbe,
+  400 : #a5c3b0,
+  500 : #95b8a2,
+  600 : #8db19a,
+  700 : #82a890,
+  800 : #78a086,
+  900 : #679175,
+  A100 : #ffffff,
+  A200 : #d4ffe2,
+  A400 : #a1ffc0,
+  A700 : #87ffaf,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+
+
+
+
+
 $cedar-tree-green: (
   50 : #ebeeef,
   100 : #ccd5d8,
@@ -199,10 +303,11 @@ $cedar-red: (
   )
 );
 
-$my-app-primary: mat-palette($cedar-green, 500, 900, A100);
-$my-app-secondary: mat-palette($cedar-blue, 500, 900, A100);
+$my-app-primary: mat-palette($metadata-center-blue, 500, 900, A100);
+$my-app-secondary: mat-palette($metadata-center-dark-blue, 500, 900, A100);
 $my-app-tertiary: mat-palette($cedar-gold, 200, 900, A100);
-$my-app-accent:  mat-palette($cedar-orange, 200, 900, A100);
+$my-app-logo:  mat-palette($metadata-center-blue, 900, 900, A100);
+$my-app-accent:  mat-palette($metadata-center-green, 500, 900, A100);
 $my-app-warn:    mat-palette($cedar-red, 500, 900, A100);
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 @include angular-material-theme($my-app-theme);
