@@ -15,7 +15,7 @@ import {Observable, SubscriptionLike} from 'rxjs';
  * @experimental
  */
 @Pipe({name: 'push', pure: false})
-export class PushPipe implements OnDestroy, PipeTransform {
+export class PushPipeOld implements OnDestroy, PipeTransform {
   private _latestValue: any = null;
   private _latestReturnedValue: any = null;
 

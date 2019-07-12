@@ -24,6 +24,7 @@ import {
   faPhoneSquare,
   faPlusSquare
 } from '@fortawesome/free-solid-svg-icons';
+import {TemplateSchema} from '../../models/template-schema.model';
 
 
 @Component({
@@ -53,6 +54,8 @@ export class FormComponent implements OnChanges {
   treeControl: NestedTreeControl<TreeNode>;
   database: TemplateParserService;
   pageEvent: PageEvent;
+  pageTitle: string;
+  pageDescription: string;
 
   faAsterisk = faAsterisk;
   faEnvelope = faEnvelope;
@@ -79,12 +82,21 @@ export class FormComponent implements OnChanges {
   onPageChange(event) {
     this.pageEvent = event;
     this.initialize();
+    this.pageTitle = TemplateService.getTitleofPage(this.template, event.pageIndex);
+    this.pageDescription = TemplateService.getDescriptionofPage(this.template, event.pageIndex);
   }
 
   onAutocomplete(event) {
     this.autocomplete.emit(event);
   }
 
+  // getTitleofPage(page: number) {
+  //   return TemplateService.getTitleofPage(this.template, page);
+  // }
+  //
+  // getDescriptionofPage(page: number) {
+  //   return TemplateService.getDescriptionofPage(this.template, page);
+  // }
 
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -120,18 +132,6 @@ export class FormComponent implements OnChanges {
       this.emitChanges(this.form.value);
       this.onChanges();
     }
-  }
-
-  getPageCount(nodes: TreeNode[]) {
-    let count = 0;
-    if (nodes) {
-      nodes.forEach(function (node) {
-        if (InputTypeService.isPageBreak(node.subtype)) {
-          count++;
-        }
-      });
-    }
-    return count + 1;
   }
 
   isDisabled() {

@@ -321,6 +321,49 @@ export class TemplateService {
   }
 
   // build an order array for a particular page
+  static getTitleofPage(schema: TemplateSchema, page: number) {
+    const p = page || 0;
+    const properties = this.getProperties(schema);
+    const order = this.getOrder(schema);
+    let currentPage = 0;
+    let result;
+    if (order) {
+      order.forEach(function (key) {
+        const prop: TemplateSchema = properties[key];
+        if (InputTypeService.isPageBreak(TemplateService.getInputType(prop))) {
+          currentPage++;
+          if (currentPage === p) {
+            result = prop['schema:name'];
+          }
+        }
+      });
+    }
+    return result;
+  }
+
+  // build an order array for a particular page
+  static getDescriptionofPage(schema: TemplateSchema, page: number) {
+    const p = page || 0;
+    const properties = this.getProperties(schema);
+    const order = this.getOrder(schema);
+    let currentPage = 0;
+    let result;
+    if (order) {
+      order.forEach(function (key) {
+        const prop: TemplateSchema = properties[key];
+        if (InputTypeService.isPageBreak(TemplateService.getInputType(prop))) {
+          currentPage++;
+          if (currentPage === p) {
+            result = prop['schema:description'];
+          }
+        }
+      });
+    }
+    return result;
+  }
+
+
+  // build an order array for a particular page
   static getOrderofPage(schema: TemplateSchema, page: number) {
     const p = page || 0;
     const properties = this.getProperties(schema);

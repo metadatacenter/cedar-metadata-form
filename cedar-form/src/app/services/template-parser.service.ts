@@ -177,6 +177,7 @@ export class TemplateParserService {
     this.dataChange.next(this.buildTree(this.templateSchema, this.instanceModel, 0, this.formGroup, null, page));
   }
 
+  // tslint:disable-next-line:max-line-length
   fieldNode(schema: TemplateSchema, model: Metadata, propertyLabel: string, inputType: InputType, minItems, maxItems, key: string, modelValue: MetadataSnip, formGroup: FormGroup, parent: TreeNode): TreeNode {
     const nodeType = TemplateService.getNodeType(inputType);
     const nodeSubtype = TemplateService.getNodeSubtype(inputType);
@@ -222,6 +223,7 @@ export class TemplateParserService {
     }
   }
 
+  // tslint:disable-next-line:max-line-length
   elementNode(schema: TemplateSchema, model: Metadata, label: string, minItems, maxItems, i, key, level, modelValue, formGroup: FormGroup, parent: TreeNode, page: number): TreeNode {
     const nodeType = TemplateService.getNodeType(InputType.element);
     const nodeSubtype = TemplateService.getNodeSubtype(InputType.element);
@@ -250,6 +252,7 @@ export class TemplateParserService {
   }
 
   // build the tree of FileNodes
+  // tslint:disable-next-line:max-line-length
   buildTree(parentSchema: TemplateSchema, model: Metadata, level: number, formGroup: FormGroup, parentNode: TreeNode, page: number): TreeNode[] {
     const order = TemplateService.getOrderofPage(parentSchema, page);
     const properties = TemplateService.getProperties(parentSchema);

@@ -9,11 +9,19 @@
   <form [formGroup]="form" *ngIf="form" class="cedar-form">
 
     <div *ngIf="pageEvent.length > 1">
-      <mat-paginator [length]="pageEvent.length"
-        [pageSize]="1"
-        [pageSizeOptions]="[1]"
-        (page)="onPageChange($event)">
-      </mat-paginator>
+      <div style="display:flex;justify-content: space-between;border-bottom:1px solid #ccc;margin-bottom:40px">
+        <h3>{{pageTitle}}
+          <button *ngIf="pageDescription" mat-icon-button class="mat-icon-button help" matTooltipPosition="right"
+            [matTooltip]="pageDescription">
+            <mat-icon>help_outline</mat-icon>
+          </button></h3>
+        <mat-paginator
+          [length]="pageEvent.length"
+          [pageSize]="1"
+          [hidePageSize] = true
+          (page)="onPageChange($event)">
+        </mat-paginator>
+      </div>
     </div>
 
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="background:transparent !important">
