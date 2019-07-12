@@ -90,15 +90,6 @@ export class FormComponent implements OnChanges {
     this.autocomplete.emit(event);
   }
 
-  // getTitleofPage(page: number) {
-  //   return TemplateService.getTitleofPage(this.template, page);
-  // }
-  //
-  // getDescriptionofPage(page: number) {
-  //   return TemplateService.getDescriptionofPage(this.template, page);
-  // }
-
-
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     if (changes['autocompleteResults'] && changes['autocompleteResults']['currentValue'].length > 0) {
       this.autocompleteResults = changes['autocompleteResults']['currentValue'];
@@ -108,6 +99,8 @@ export class FormComponent implements OnChanges {
   }
 
   private hasNestedChild = (_: number, nodeData: TreeNode) => !nodeData.type;
+
+  private notHidden = (node: TreeNode) => (!node.hidden);
 
   private _getChildren = (node: TreeNode) => node.children;
 
@@ -136,6 +129,10 @@ export class FormComponent implements OnChanges {
 
   isDisabled() {
     return this.mode === 'view';
+  }
+
+  isHidden(node: TreeNode) {
+    return node.hidden;
   }
 
   // add new element to form

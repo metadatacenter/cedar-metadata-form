@@ -192,6 +192,7 @@ export class TemplateParserService {
       'minItems': minItems,
       'maxItems': maxItems,
       'itemCount': 0,
+      'hidden': TemplateService.getHidden(schema),
 
       'formGroup': formGroup,
       'parentGroup': parent ? parent.formGroup : null,

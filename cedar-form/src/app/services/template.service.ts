@@ -410,6 +410,10 @@ export class TemplateService {
     return (schema && schema._ui && schema._ui['_size']) ? schema._ui['_size'] : null;
   }
 
+  static getHidden(schema: TemplateSchema): any {
+    return (schema && schema._ui && schema._ui['hidden']) ? schema._ui['hidden'] : false;
+  }
+
   // has multiple choice value constraints?
   static isMultiValue(schema: TemplateSchema) {
     return schema._valueConstraints && schema._valueConstraints.multipleChoice;
