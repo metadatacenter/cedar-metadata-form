@@ -1,21 +1,9 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChange,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 import {InputTypeService} from '../../services/input-type.service';
 import {InputType} from '../../models/input-type';
 import {TreeNode} from '../../models/tree-node.model';
-import {TemplateParserService} from '../../services/template-parser.service';
 import {InstanceService} from '../../services/instance.service';
 import {ValidatorService} from '../../services/validator.service';
 import {
@@ -65,14 +53,12 @@ export class QuestionComponent implements OnInit, OnChanges {
   faDotCircle = faDotCircle;
   faPlusSquare = faPlusSquare;
   faExternalLinkAlt = faExternalLinkAlt;
-  database: TemplateParserService;
   formGroup: FormGroup;
   showDelay = {value: 0};
   hideDelay = {value: 0};
   offScreen = 'position:absolute;top:-1000px;left:-1000px';
 
-  constructor(private elementRef: ElementRef, private fb: FormBuilder, db: TemplateParserService) {
-    this.database = db;
+  constructor(private fb: FormBuilder) {
   }
 
   onAutocomplete(event) {

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidatorFn} from '@angular/forms';
 
 import {TreeNode} from '../../models/tree-node.model';
 import {ValidatorService} from '../../services/validator.service';
@@ -29,7 +29,6 @@ export class TextfieldComponent implements OnInit {
 
     // watch for changes
     this.formGroup.get( 'values').valueChanges.subscribe(value => {
-
       // update our metadata model
       this.node.model[this.node.key] = this.setValue(value, this.node.model[this.node.key], this.node.valueLocation);
 
@@ -70,7 +69,6 @@ export class TextfieldComponent implements OnInit {
       result.push(null);
     }
     return result;
-
   }
 
 

@@ -4,6 +4,10 @@
       [matTooltip]="description">
       <mat-icon>help_outline</mat-icon>
     </button>
+    <button mat-icon-button class="mat-icon-button help" matTooltipPosition="right"
+      [matTooltip]="getTemplateInfo()">
+      <mat-icon>info_outline</mat-icon>
+    </button>
   </h2>
 
   <form [formGroup]="form" *ngIf="form" class="cedar-form">
