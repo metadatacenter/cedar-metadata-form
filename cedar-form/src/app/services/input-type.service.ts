@@ -8,7 +8,7 @@ export class InputTypeService {
   }
 
   static allowsMultiple(t: string) {
-    return constants.inputTypes[t].allowsMultiple;
+    return constants.inputTypes[t] && constants.inputTypes[t].allowsMultiple;
   }
 
   static isNotTextInput(t: string) {

@@ -18,7 +18,7 @@ import {TreeNode} from '../../models/tree-node.model';
   styleUrls: ['./date.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DateComponent implements OnInit, AfterViewInit {
+export class DateComponent implements OnInit {
   @ViewChild('picker', {static: true}) picker: ElementRef;
   @ViewChild('toggle', {static: true}) toggle: ElementRef;
   @Input() formGroup: FormGroup;
@@ -29,21 +29,6 @@ export class DateComponent implements OnInit, AfterViewInit {
 
 
   constructor(private elementRef: ElementRef) {
-  }
-
-  ngAfterViewInit(): void {
-    // if (this.picker) {
-    //   const toggle = this.elementRef.nativeElement.querySelector('.mat-datepicker-toggle > button');
-    //   if (toggle) {
-    //     // Listen for click event on toggle icon to force ui update
-    //     // Need to do this when change detection is noop with Angular Elements
-    //     // toggle.addEventListener('click', () => {
-    //        // setTimeout(() => {
-    //       //   this.ref.detectChanges();
-    //       // });
-    //     // });
-    //   }
-    // }
   }
 
   ngOnInit() {
@@ -66,10 +51,6 @@ export class DateComponent implements OnInit, AfterViewInit {
         'location': this.node.valueLocation,
         'value': value
       });
-
-      // setTimeout(() => {
-      //   this.ref.detectChanges();
-      // });
     });
   }
 
