@@ -1,6 +1,10 @@
 {
-  "name": "cedar-form",
-  "version": "2.3.9",
+  "name": "cedar-metadata-form",
+  "version": "2.4.9-SNAPSHOT",
+  "publishConfig": {
+    "registry": "https://nexus.bmir.stanford.edu/repository/npm-cedar/"
+  },
+  "description": "Embeddable Metadata Editor written using Angular 7",
   "scripts": {
     "ng": "ng",
     "start": "npm run build && serve -l 5001 dist/cedar-form",
@@ -9,7 +13,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^8.0.0",
     "@angular/cdk": "^7.3.7",
