@@ -5,7 +5,7 @@ addons:
   - foo.metadatacenter.orgx
 language: node_js
 node_js:
-- '6'
+- '12'
 branches:
   only:
   - develop
