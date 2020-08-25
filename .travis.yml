@@ -1,0 +1,33 @@
+sudo: required
+dist: trusty
+addons:
+  hosts:
+  - foo.metadatacenter.orgx
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
+language: node_js
+node_js:
+- '6'
+branches:
+  only:
+  - develop
+  - master
+notifications:
+  slack:
+    on_success: change
+    on_failure: always
+    secure: RFPvZgNAkkTbJ3OcVjlYyfxTejr0U1miFPr2q4m+b3/8fRKGEfRlj+ShK90/b8Hxjhv83yv0PFWsQizm6t2mm1zmtexMYV40SkvQW8t7IcMutXKxtEYhb5c0lR7mjwOYu85Qn9vMFROTd2ckjZ9oZ5VwkloM0cYb5OMgF9N+kQDRUmBxG5my6Lc4My4G5MB4xQ84bAJnvqcafXJGYPitkZsv11DpVAkFncJF2nCPTrvr19GZqlyx4W7vX1QuEFe8W3PO9AOv9vQrQ38cwkrmdLp+AnSR7UhKYSyBdIf1VWRysvzbT9cpEIao5AzVFONik5Hqc9EXJFdxm0+corgHOtephr8RN6RVBKWH4r8NmXZ8t/F/Sxxr3ASnKWFvKTYrborsqX0DMJkmhcFpnEoyv6f8xuXRluI4PHaHwzcAG1tuN2PzBRiHSkbgTVIOKH2umv9+ee+uLF8RygynVAT4H8cKqT7GWPdiEfCxI3c9n/xnENbzaWLho0Sh3Tf0HAokyKeZSFKPFuu6iTWu20c677YbiUse/MO9iU2jEVQk0Q5f2/W+aIoULJPgCJ7lr3O8A1I/HtEhPKs6mCGLpfx18si39UZO8znnskwN6aXv1rvfvirsQFGLpwIGexdq6X50JPB4G8jIO8gVCr3wXgGBwRepga+gaicVrApHKRViGwo=
+before_install:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+install:
+- npm install
+env:
+  global:
+  - CEDAR_VERSION="2.5.5-SNAPSHOT"
+cache:
+  directories:
+  - node_modules
