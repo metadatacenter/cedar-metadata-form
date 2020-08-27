@@ -31,6 +31,7 @@ export interface TreeNode {
   pattern?: string;
   multipleChoice?: boolean;
   multiSelect?: boolean;
+  hidden?: boolean;
 
   options?: any;
   size?: any;

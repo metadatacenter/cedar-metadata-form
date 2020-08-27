@@ -1,4 +1,5 @@
 <mat-form-field class="mat-form-field">
+
   <input matInput
     [formControl]="control" [type]="node.subtype"
     [min]="node.minLength" [max]="node.maxLength"
@@ -20,23 +21,27 @@
   <mat-error *ngIf="control['hasError']('decimal')">
     Value must have exactly
     <strong>{{control['errors']['decimal']['required']}}</strong>
-    decimal places instead of
-    <strong>{{control['errors']['decimal']['actual']}}</strong>
+    decimal places
+    <span *ngIf="control['errors']['decimal']['actual']" >
+    instead of
+    <strong>{{control['errors']['decimal']['actual']}}</strong></span>
+    , for example,
+    {{control['errors']['decimal']['suggested']}}
   </mat-error>
   <mat-error *ngIf="control['hasError']('min')">
-    Value {{control['errors']['min']['actual']}} must be larger than
+    Value {{control['errors']['min']['actual']}} must be greater than
     <strong>{{control['errors']['min']['min']}}</strong>
   </mat-error>
   <mat-error *ngIf="control['hasError']('max')">
-    Value {{control['errors']['max']['actual']}} must be smaller than
+    Value {{control['errors']['max']['actual']}} must be less than
     <strong>{{control['errors']['max']['max']}}</strong>
   </mat-error>
   <mat-error *ngIf="control['hasError']('minlength')">
-    Value length {{control['errors']['minlength']['actualLength']}} is smaller than
+    Value length {{control['errors']['minlength']['actualLength']}} is less than
     <strong>{{control['errors']['minlength']['requiredLength']}}</strong>
   </mat-error>
   <mat-error *ngIf="control['hasError']('maxlength')">
-    Value length {{control['errors']['maxlength']['actualLength']}} is larger than
+    Value length {{control['errors']['maxlength']['actualLength']}} is greater than
     <strong>{{control['errors']['maxlength']['requiredLength']}}</strong>
   </mat-error>
   <mat-error *ngIf="control['hasError']('required')">

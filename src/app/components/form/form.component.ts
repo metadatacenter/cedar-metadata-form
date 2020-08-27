@@ -7,24 +7,7 @@ import * as cloneDeep from 'lodash/cloneDeep';
 import {TemplateParserService} from '../../services/template-parser.service';
 import {TemplateService} from '../../services/template.service';
 import {TreeNode} from '../../models/tree-node.model';
-import {InputTypeService} from '../../services/input-type.service';
 import {InstanceService} from '../../services/instance.service';
-import {
-  faAsterisk,
-  faCalendar,
-  faCheckSquare,
-  faDotCircle,
-  faEnvelope,
-  faExternalLinkAlt,
-  faFont,
-  faHashtag,
-  faLink,
-  faList,
-  faParagraph,
-  faPhoneSquare,
-  faPlusSquare
-} from '@fortawesome/free-solid-svg-icons';
-
 
 @Component({
   selector: 'app-metadata-form',
@@ -42,9 +25,7 @@ export class FormComponent implements OnChanges {
   @Input() autocompleteResults: any;
   @Output() autocomplete = new EventEmitter<any>();
   @Output() formChange = new EventEmitter<any>();
-
   @ViewChild('help', {static: true}) help: ElementRef;
-
 
   form: FormGroup;
   title: string;
@@ -53,20 +34,8 @@ export class FormComponent implements OnChanges {
   treeControl: NestedTreeControl<TreeNode>;
   database: TemplateParserService;
   pageEvent: PageEvent;
-
-  faAsterisk = faAsterisk;
-  faEnvelope = faEnvelope;
-  faHashtag = faHashtag;
-  faLink = faLink;
-  faFont = faFont;
-  faCalendar = faCalendar;
-  faPhoneSquare = faPhoneSquare;
-  faParagraph = faParagraph;
-  faCheckSquare = faCheckSquare;
-  faList = faList;
-  faDotCircle = faDotCircle;
-  faPlusSquare = faPlusSquare;
-  faExternalLinkAlt = faExternalLinkAlt;
+  pageTitle: string;
+  pageDescription: string;
 
   constructor(database: TemplateParserService, private elementRef: ElementRef) {
     this.pageEvent = {'previousPageIndex': 0, 'pageIndex': 0, 'pageSize': 1, 'length': 0};
@@ -79,13 +48,13 @@ export class FormComponent implements OnChanges {
   onPageChange(event) {
     this.pageEvent = event;
     this.initialize();
+    this.pageTitle = TemplateService.getTitleofPage(this.template, event.pageIndex);
+    this.pageDescription = TemplateService.getDescriptionofPage(this.template, event.pageIndex);
   }
 
   onAutocomplete(event) {
     this.autocomplete.emit(event);
   }
-
-
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     if (changes['autocompleteResults'] && changes['autocompleteResults']['currentValue'].length > 0) {
@@ -97,10 +66,12 @@ export class FormComponent implements OnChanges {
 
   private hasNestedChild = (_: number, nodeData: TreeNode) => !nodeData.type;
 
+  private notHidden = (node: TreeNode) => !node.hidden;
+
   private _getChildren = (node: TreeNode) => node.children;
 
+  // initialize tree database
   initialize() {
-
     if (this.instance && this.template) {
       this.pageEvent.length = TemplateService.getPageCount(this.template);
 
@@ -122,20 +93,14 @@ export class FormComponent implements OnChanges {
     }
   }
 
-  getPageCount(nodes: TreeNode[]) {
-    let count = 0;
-    if (nodes) {
-      nodes.forEach(function (node) {
-        if (InputTypeService.isPageBreak(node.subtype)) {
-          count++;
-        }
-      });
-    }
-    return count + 1;
-  }
-
+  // is this view or edit mode
   isDisabled() {
     return this.mode === 'view';
+  }
+
+  // is this node hidden
+  isHidden(node: TreeNode) {
+    return node.hidden;
   }
 
   // add new element to form
@@ -161,8 +126,6 @@ export class FormComponent implements OnChanges {
     const parentGroup = node.parentGroup || this.form;
     parentGroup.addControl((clonedNode.key + clonedNode.itemCount), clonedNode.formGroup);
     this.database.dataChange.next(this.database.data);
-
-    // this.ref.detectChanges();
   }
 
   // delete last element in node array
@@ -181,10 +144,7 @@ export class FormComponent implements OnChanges {
     const parent = node.parentGroup || this.form;
     parent.removeControl((node.key + node.itemCount));
     this.database.dataChange.next(this.database.data);
-
-    // this.ref.detectChanges();
   }
-
 
   // reset the model down the tree at itemCount
   updateModel(node: TreeNode, model) {
@@ -210,7 +170,7 @@ export class FormComponent implements OnChanges {
     }
   }
 
-
+  // validate the entire form by touching each field
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
@@ -245,6 +205,25 @@ export class FormComponent implements OnChanges {
     }
   }
 
+  // correct the minutes and timezone
+  parseDate(val) {
+    let result;
+    if (val) {
+      // 'add' a timezone offset so we end up on the original date again
+      const dt = new Date(val);
+      dt.setMinutes(dt.getMinutes() + dt.getTimezoneOffset());
+      result =  dt;
+    }
+    return result;
+  }
 
+  // get the metadata for the template
+  getTemplateInfo() {
+    let result;
+    if (this.template && this.template.hasOwnProperty('pav:lastUpdatedOn')) {
+      result = this.parseDate(this.template['pav:lastUpdatedOn'].substring(0, 10)).toDateString();
+    }
+    return result;
+  }
 }
 

@@ -22,7 +22,7 @@ export class ValidatorService {
     if (node.max !== null) {
       validators.push(Validators.max(node.max));
     }
-    if (node.subtype == InputType.numeric) {
+    if (node.subtype === InputType.numeric) {
       validators.push(this.numericValidator());
     }
     if (node.decimals) {
@@ -66,17 +66,33 @@ export class ValidatorService {
     };
   }
 
+
   // validator for precision of a number
   static decimalValidator(precision: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: { actual: number, required: number } } | null => {
       let result = null;
-      if (control.value && (!isNaN(Number(control.value)))) {
-        const actual = control.value.split(".")[1].length;
-        if (precision !== actual) {
+      if (precision && control.value && (!isNaN(Number(control.value)))) {
+        const intPrecision = (Math.floor( control.value ) + '').split('.')[0].length;
+        const arr = control.value.split('.');
+        const decimalPrecision = arr[1] && arr[1].length;
+        const suggestion = Number.parseFloat(control.value).toPrecision(intPrecision + precision);
+
+        if (decimalPrecision) {
+          if (precision < decimalPrecision) {
+            result = {
+              decimal: {
+                actual: decimalPrecision,
+                required: precision,
+                suggested: suggestion
+              }
+            };
+          }
+        } else {
           result = {
             decimal: {
-              actual: actual,
-              required: precision
+              actual: 0,
+              required: precision,
+              suggested: suggestion
             }
           };
         }
@@ -90,6 +106,7 @@ export class ValidatorService {
     if (url.pristine) {
       return null;
     }
+    // tslint:disable-next-line:max-line-length
     const URL_REGEXP = /^(http?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
     url.markAsTouched();
     if (URL_REGEXP.test(url.value)) {

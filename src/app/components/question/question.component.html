@@ -67,7 +67,7 @@
         (changed)="onChange($event)"></app-radio>
     </div>
 
-    <div *ngIf="allowsMultiple(node.type)">
+    <div *ngIf="node.type && allowsMultiple(node.type)">
       <div [ngSwitch]="node.type">
         <div *ngFor="let control of formGroup.controls['values']['controls'];index as i">
 

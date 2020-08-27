@@ -28,8 +28,39 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## To build as web component and push to cedar-component-server
 
-ng build --prod --output-hashing=none
+    ng build --prod --output-hashing=none
+    cat dist/cedar-form/{runtime,polyfills,main}.js > custom-elements.js
+    cp custom-elements.js  {$CEDAR_HOME}/cedar-component-distribution/cedar-form/cedar-form-{$CEDAR_VERSION}.js
 
-cat dist/cedar-form/{runtime,polyfills,main}.js > custom-elements.js
+## To load in your app as web component 
 
-cp custom-elements.js  /Users/dwillrett/Development/git_repos/CEDAR/cedar-component-server/cedar-form/cedar-form-0.0.1.js
+```       
+<script src="https://component.metadatacenter.org/cedar-form/cedar-form-{$CEDAR_VERSION}.js" type="text/javascript"></script>   
+```
+ 
+Follow the instructions for using web components for your environment.
+
+## To use the cedar-form web component in your app 
+
+Here is an example of how you would call it from your Angular app:
+
+```       
+  <cedar-form
+    [mode]="mode"
+    [instance]="instance"
+    [template]="template"
+    (autocomplete)="onAutocomplete($event)"
+    [autocompleteResults]="allPosts"
+    (formChange)="onFormChange($event)"
+  ></cedar-form> 
+```
+
+using parameters:
+1. mode 
+    1. "edit" for full editing capability
+    2. "view" for view only
+2. instance - The CEDAR JSON-LD instance to view or edit.  
+3. template - the CEDAR Template, Template-element or Template-field to be used
+4. autocomplete - event triggered when user requests autocomplete of a controlled term dropdown
+5. autocompleteResults - after the autocomplete event, caller should fill the autocompleteResult array to populate the dropdown
+6. formChange - event triggered when the value of the form has changed. 

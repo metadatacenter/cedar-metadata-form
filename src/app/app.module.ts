@@ -9,7 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AppComponent} from './app.component';
 import {DemoMaterialModule} from './shared/material-module';
-import {PushPipe} from './push.pipe';
+import {PushPipeOld} from './push.pipe';
 import {FormComponent} from './components/form/form.component';
 import {AttributeValueComponent} from './components/attribute-value/attribute-value.component';
 import {QuestionComponent} from './components/question/question.component';
@@ -37,7 +37,7 @@ import { ElementZoneStrategyFactory } from 'elements-zone-strategy';
   declarations: [
     AppComponent,
     FormComponent,
-    PushPipe,
+    PushPipeOld,
     AttributeValueComponent,
     CheckboxComponent,
     ControlledComponent,
