@@ -198,15 +198,15 @@ export class TemplateService {
           result = [];
           for (let i = 0; i < minItems; i++) {
             const item = {'@value': null};
-            if (type === InputType.date) {
-              item['@type'] = 'xsd:date';
+            if (type === InputType.temporal) {
+              item['@type'] = 'xsd:dateTime';
             }
             result.push(item);
           }
         } else {
           result = {'@value': null};
-          if (type === InputType.date) {
-            result['@type'] = 'xsd:date';
+          if (type === InputType.temporal) {
+            result['@type'] = 'xsd:dateTime';
           }
         }
       } else {

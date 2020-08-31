@@ -78,10 +78,10 @@ export const constants = {
       'hasInstanceTerm': false,
       'allowsRequired': true
     },
-    'date': {
-      'cedarType': 'date',
+    'temporal': {
+      'cedarType': 'temporal',
       'iconClass': 'fa fa-calendar',
-      'label': 'Date',
+      'label': 'Temporal',
       'allowedInElement': true,
       'primaryField': true,
       'hasControlledTerms': false,

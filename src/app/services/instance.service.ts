@@ -60,7 +60,7 @@ export class InstanceService {
   }
 
   static generateInstanceTypeForDateField() {
-    return 'xsd:date';
+    return 'xsd:dateTime';
   }
 
   static generateInstanceTypeForNumericField(schema: TemplateSchema) {

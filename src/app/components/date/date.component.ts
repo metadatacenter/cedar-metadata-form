@@ -84,7 +84,7 @@ export class DateComponent implements OnInit {
 
   // create the metadata model date object
   setDate(value, valueLocation) {
-    const obj = {'@type': 'xsd:date'};
+    const obj = {'@type': 'xsd:dateTime'};
     obj[valueLocation] = value ? this.parseDate(value).toISOString().substring(0, 10) : null;
     return obj;
   }

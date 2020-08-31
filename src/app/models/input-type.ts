@@ -5,7 +5,7 @@ export enum InputType {
   textarea = 'textarea',
   radio = 'radio',
   checkbox = 'checkbox',
-  date = 'date',
+  temporal = 'temporal',
   email = 'email',
   list = 'list',
   numeric = 'numeric',

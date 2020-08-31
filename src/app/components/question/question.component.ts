@@ -174,7 +174,7 @@ export class QuestionComponent implements OnInit, OnChanges {
         this.setDisable(this.formGroup, this.mode === 'view');
         break;
 
-      case InputType.date:
+      case InputType.temporal:
         this.formGroup = this.fb.group({values: this.fb.array(this.allowMultipleControls(this.node, false, validators))});
         // this.formGroup.updateValueAndValidity({onlySelf: true, emitEvent: true});
         this.parentGroup.setControl(this.node.key, this.formGroup);
@@ -273,7 +273,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
       case InputType.textfield:
       case InputType.textarea:
-      case InputType.date:
+      case InputType.temporal:
 
         if (node.model) {
           if (Array.isArray(node.model[node.key])) {
@@ -303,7 +303,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
       case InputType.textfield:
       case InputType.textarea:
-      case InputType.date:
+      case InputType.temporal:
         node.model[this.node.key].splice(index, 1);
         // this.formGroup.updateValueAndValidity({onlySelf: false, emitEvent: true});
         this.formGroup.setControl('values', this.fb.array(this.allowMultipleControls(node, false, validators)));
