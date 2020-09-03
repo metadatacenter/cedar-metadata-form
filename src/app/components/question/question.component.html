@@ -23,7 +23,7 @@
       <span *ngIf="node.subtype == 'text'" class="question-icon"><fa-icon [icon]="faFont"></fa-icon></span>
       <span *ngIf="node.subtype == 'tel'" class="question-icon"><fa-icon [icon]="faPhoneSquare"></fa-icon></span>
       </span>
-    <span *ngIf="node.type == 'date'" class="question-icon"><fa-icon [icon]="faCalendar"></fa-icon></span>
+    <span *ngIf="node.type == 'temporal'" class="question-icon"><fa-icon [icon]="faCalendar"></fa-icon></span>
     <span *ngIf="node.type == 'textarea'" class="question-icon"><fa-icon [icon]="faParagraph"></fa-icon></span>
     <span *ngIf="node.type == 'checkbox'" class="question-icon"><fa-icon [icon]="faCheckSquare"></fa-icon></span>
     <span *ngIf="node.type == 'list'" class="question-icon"><fa-icon [icon]="faList"></fa-icon></span>
@@ -93,7 +93,7 @@
           <app-textarea *ngSwitchCase="'textarea'" [formGroup]="formGroup" [control]="control" [node]="node"
             [index]="i" (changed)="onChange($event)"></app-textarea>
 
-          <app-date *ngSwitchCase="'date'" [formGroup]="formGroup" [control]="control" [node]="node" [index]="i"
+          <app-date *ngSwitchCase="'temporal'" [formGroup]="formGroup" [control]="control" [node]="node" [index]="i"
             (changed)="onChange($event)"></app-date>
         </div>
       </div>
