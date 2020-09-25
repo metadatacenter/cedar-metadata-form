@@ -12,7 +12,9 @@ export class InputTypeService {
   }
 
   static isNotTextInput(t: string) {
-    return t === InputType.attributeValue || t === InputType.controlled || t === InputType.list || t === InputType.radio || t === InputType.checkbox || t === InputType.temporal || t === InputType.textarea;
+    return t === InputType.attributeValue ||
+      t === InputType.controlled || t === InputType.list || t === InputType.radio ||
+      t === InputType.checkbox || t === InputType.temporal || t === InputType.textarea;
   }
 
   static isRadioCheckList(t: string) {
