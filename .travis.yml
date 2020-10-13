@@ -2,27 +2,32 @@ sudo: required
 dist: trusty
 addons:
   hosts:
-  - foo.metadatacenter.orgx
+    - foo.metadatacenter.orgx
+  chrome: stable
 language: node_js
 node_js:
-- '12'
+  - '12'
 branches:
   only:
-  - develop
-  - master
+    - develop
+    - master
 notifications:
   slack:
     on_success: change
     on_failure: always
     secure: b0K6xRo/JL0wfshL+eek1zW1uyrjH1MrsOjX4djOpRtHULNnlav4af3QVjoQA0c26nlFWyJwcpreItjiry53wpdCw6pjDhGOn63xfRcweTUvoSg/B3JHXU9gjdQbNkejWsEy9eEHgCl4Y9sidM7NAE2GLyzbaw7vJQGaY51XR56r4SobOEtHCO16xBK+tCaIDbQ0wfgYDOyslJEiqte69hTF0YUL2FtNtX/pUm8Ky1/R5nPH7U0600IgZdjlO8psSCZ1Jwkp0O1Qow0jDxJGKO9HLr+rfwOHlQnFVaQm4B9bi/tai7l8MFuIULh9xGXQB/kdO1hhRCuoVPkOOdYGuV4vzfAtcCrfWEOHGS4oAlDKHSH8ANoXH/bxOx80Nxv6smfnOtB1ZIOhn179DOBHfM5D3j+X0S+ToHJ95Xteenhwc+3nmRCQAe3iMwM3uLA1yWc2AvOJ9cEjqh3AVgVHmNCvYG2GR2vKufNLKHgddILNb4c2y7q2Iz4Omb1uCnYWwA3e7DUO1BUlWsaPyrqZRwsVRSeyGHzosqI9VNbFdctJHAGLdfwbV6D8bg/1ZwKq1D98s2n/7jrnsQ3JK6JLH2zzh5q5oufeMoR4gabNzfDfi5WP07uonXpUedcnIYN6e+2fNdsLeP50BMcdCce5ugULpfRdRXe/4EnWIX2A8Ew=
 before_install:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 install:
-- npm install
+  - npm install
+before_script:
+  - npm install -g @angular/cli
+script:
+  - ng test --watch=false
 env:
   global:
-  - CEDAR_VERSION="2.5.16"
+    - CEDAR_VERSION="2.5.17"
 cache:
   directories:
-  - node_modules
+    - node_modules
